@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff2e7" />
+    <meta
+      name="description"
+      content="Our Wedding, Through Your Eyes. Share one photograph or a 5 to 10 second video for Wesley and Dionne."
+    />
+    <title>Our Wedding, Through Your Eyes | Wesley &amp; Dionne</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&amp;family=Ma+Shan+Zheng&amp;family=Noto+Serif+SC:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #fff2e7;
+        --cream-light: #fff8f1;
+        --paper: rgba(255, 248, 241, 0.88);
+        --red: #a9212a;
+        --red-dark: #861922;
+        --gold: #c9973e;
+        --gold-soft: #deb86e;
+        --gold-pale: #ead3a5;
+        --ink: #3e2626;
+        --muted: #725f5c;
+        --english: "Cormorant Garamond", Georgia, serif;
+        --display: "Literata", Georgia, serif;
+        --chinese: "Ma Shan Zheng", "Noto Serif SC", serif;
+        --clarity: "Noto Serif SC", Georgia, serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        min-height: 100%;
+        background: var(--cream);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 50% -8%, rgba(255,255,255,.9), transparent 32rem),
+          var(--cream);
+        font-family: var(--english);
+        font-size: 1.125rem;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button, input, textarea { font: inherit; }
+      button { -webkit-tap-highlight-color: transparent; }
+      button, label, p, h1, h2, strong, small { overflow-wrap: break-word; }
+      [hidden] { display: none !important; }
+
+      .skip-link {
+        position: fixed;
+        z-index: 20;
+        top: 10px;
+        left: 10px;
+        min-height: 44px;
+        padding: 10px 14px;
+        color: var(--cream-light);
+        background: var(--red);
+        transform: translateY(-150%);
+      }
+
+      .skip-link:focus { transform: translateY(0); }
+
+      :focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        padding: max(18px, env(safe-area-inset-top)) 18px max(42px, env(safe-area-inset-bottom));
+      }
+
+      .background-art {
+        position: fixed;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+        mix-blend-mode: multiply;
+        opacity: .48;
+      }
+
+      .floral-left { width: min(32vw, 420px); top: 2vh; left: -6vw; }
+      .floral-right { width: min(31vw, 390px); top: 0; right: -7vw; }
+      .blossoms-right { width: min(18vw, 220px); top: 33vh; right: -4vw; opacity: .34; }
+      .peony-bottom { width: min(39vw, 470px); left: -10vw; bottom: -9vw; opacity: .28; }
+
+      .shell {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 760px);
+        margin: 0 auto;
+        padding-top: 4rem;
+      }
+
+      .shell:focus { outline: none; }
+
+      .language-toggle {
+        position: fixed;
+        z-index: 10;
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+        display: block;
+        min-width: 70px;
+        min-height: 44px;
+        max-width: calc(100vw - 24px);
+        margin: 0;
+        border: 1px solid rgba(201, 151, 62, .42);
+        padding: 10px 12px;
+        color: var(--muted);
+        background: rgba(255, 248, 241, .9);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        font-family: var(--clarity);
+        font-size: .82rem;
+        letter-spacing: .08em;
+      }
+
+      .language-toggle .active { color: var(--red); font-weight: 600; }
+      .number,
+      .latin {
+        font-family: var(--clarity);
+        font-size: .86em;
+      }
+
+      html[lang="zh-Hans"] [data-i18n] {
+        font-family: var(--chinese);
+        font-weight: 400;
+      }
+
+      html[lang="zh-Hans"] .number,
+      html[lang="zh-Hans"] .latin,
+      html[lang="zh-Hans"] textarea,
+      html[lang="zh-Hans"] input,
+      html[lang="zh-Hans"] select {
+        font-family: var(--clarity);
+      }
+
+      .invitation-frame {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        opacity: .24;
+        pointer-events: none;
+      }
+
+      .hero {
+        position: relative;
+        padding: clamp(30px, 6vw, 58px) 22px 20px;
+        text-align: center;
+      }
+
+      .emblem {
+        width: clamp(68px, 12vw, 92px);
+        height: clamp(68px, 12vw, 92px);
+        margin: 0 auto 14px;
+        background: var(--red);
+        -webkit-mask: url("assets/double-happiness-optimized.png") center / contain no-repeat;
+        mask: url("assets/double-happiness-optimized.png") center / contain no-repeat;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--gold);
+        font-family: var(--english);
+        font-size: .78rem;
+        font-weight: 600;
+        letter-spacing: .26em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 620px;
+        margin: 0 auto;
+        font-family: var(--display);
+        font-size: clamp(2.45rem, 8vw, 4.7rem);
+        font-weight: 500;
+        line-height: .92;
+        letter-spacing: -.035em;
+      }
+
+      .chinese-title {
+        margin: 13px 0 0;
+        color: var(--red);
+        font-family: var(--chinese);
+        font-size: 1.08rem;
+        font-weight: 400;
+        letter-spacing: .2em;
+      }
+
+      .knot-divider {
+        display: block;
+        width: min(280px, 55vw);
+        height: 58px;
+        margin: 5px auto 0;
+        object-fit: contain;
+        opacity: .6;
+      }
+
+      .intro {
+        max-width: 500px;
+        margin: -2px auto 0;
+        color: var(--muted);
+        font-size: 1.25rem;
+        line-height: 1.55;
+      }
+
+      .date {
+        margin: 13px 0 0;
+        color: var(--gold);
+        font-family: var(--english);
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: .18em;
+      }
+
+      .card {
+        position: relative;
+        margin: 14px auto 0;
+        padding: clamp(23px, 5vw, 38px);
+        border: 1px solid rgba(201, 151, 62, .46);
+        background: var(--paper);
+        box-shadow: 0 24px 70px rgba(82, 40, 32, .10);
+        backdrop-filter: blur(12px);
+      }
+
+      .card::before,
+      .card::after {
+        content: "";
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        border-color: var(--gold-soft);
+        pointer-events: none;
+      }
+
+      .card::before { top: 8px; left: 8px; border-top: 1px solid; border-left: 1px solid; }
+      .card::after { right: 8px; bottom: 8px; border-right: 1px solid; border-bottom: 1px solid; }
+
+      .step-note {
+        margin: 0 0 7px;
+        color: var(--red);
+        font-family: var(--english);
+        font-size: .78rem;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(1.85rem, 5.6vw, 2.65rem);
+        font-weight: 500;
+        line-height: 1.05;
+        text-align: center;
+      }
+
+      .card-copy {
+        max-width: 480px;
+        margin: 12px auto 24px;
+        color: var(--muted);
+        font-size: 1.125rem;
+        text-align: center;
+      }
+
+      .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .choice {
+        min-height: 155px;
+        padding: 22px 16px;
+        border: 1px solid var(--gold-pale);
+        color: var(--ink);
+        background: rgba(255, 250, 245, .75);
+        cursor: pointer;
+        transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      }
+
+      .choice:hover,
+      .choice:focus-visible {
+        border-color: var(--gold);
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+        box-shadow: 0 10px 30px rgba(134, 25, 34, .08);
+        transform: translateY(-2px);
+      }
+
+      .choice-icon {
+        display: block;
+        width: 64%;
+        height: 64%;
+        margin: 0;
+        padding: 0;
+        object-fit: contain;
+      }
+
+      .choice-icon-circle {
+        display: grid;
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 13px;
+        place-items: center;
+        border: 1px solid var(--gold-soft);
+        border-radius: 50%;
+        background: rgba(255, 250, 245, .7);
+        overflow: visible;
+      }
+
+      .choice strong {
+        display: block;
+        font-family: var(--english);
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      .choice small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: .75rem;
+        line-height: 1.45;
+      }
+
+      .quiet-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: .71rem;
+        letter-spacing: .04em;
+      }
+
+      .quiet-line::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border: 1px solid var(--gold);
+        transform: rotate(45deg);
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .back-button {
+        display: inline-flex;
+        min-width: 44px;
+        min-height: 44px;
+        align-items: center;
+        border: 0;
+        padding: 10px 8px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font-size: .78rem;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .panel-label {
+        color: var(--red);
+        font-family: var(--english);
+        font-size: .8rem;
+        font-weight: 600;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+      }
+
+      .duration-picker {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 18px 0;
+      }
+
+      .duration-button {
+        min-width: 64px;
+        min-height: 44px;
+        border: 1px solid var(--gold-pale);
+        color: var(--ink);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .duration-button.active {
+        border-color: var(--red);
+        color: #fffaf5;
+        background: var(--red);
+      }
+
+      .primary,
+      .secondary {
+        width: 100%;
+        min-height: 52px;
+        border: 1px solid var(--red);
+        padding: 13px 18px;
+        cursor: pointer;
+        font-family: var(--english);
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        white-space: normal;
+      }
+
+      .primary { color: #fffaf5; background: var(--red); }
+      .primary:hover, .primary:focus-visible { background: var(--red-dark); }
+      .secondary { margin-top: 10px; color: var(--red); background: transparent; }
+
+      .primary:focus-visible,
+      .secondary:focus-visible,
+      .duration-button:focus-visible,
+      .back-button:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      .upload-zone {
+        display: grid;
+        min-height: 210px;
+        place-items: center;
+        padding: 25px;
+        border: 1px dashed var(--gold-soft);
+        background: rgba(255,255,255,.35);
+        text-align: center;
+      }
+
+      .upload-zone p { margin: 0 0 14px; color: var(--muted); font-size: .85rem; }
+
+      .file-trigger {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        padding: 10px 6px;
+        border-bottom: 1px solid var(--red);
+        color: var(--red);
+        cursor: pointer;
+        font-family: var(--english);
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .media-stage {
+        position: relative;
+        width: min(100%, 360px);
+        aspect-ratio: 9 / 16;
+        margin: 0 auto 18px;
+        overflow: hidden;
+        border: 1px solid var(--gold-soft);
+        background: #261b1c;
+      }
+
+      .media-stage img,
+      .media-stage video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .media-stage .empty-preview {
+        display: grid;
+        height: 100%;
+        place-items: center;
+        padding: 30px;
+        color: rgba(255,255,255,.62);
+        font-family: var(--english);
+        text-align: center;
+      }
+
+      .trim-box {
+        margin: 16px 0;
+        padding: 16px;
+        border: 1px solid var(--gold-pale);
+        background: rgba(255,255,255,.42);
+      }
+
+      .trim-row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        color: var(--muted);
+        font-size: .76rem;
+      }
+
+      input[type="range"] { width: 100%; min-height: 44px; accent-color: var(--red); }
+
+      .caption-label {
+        display: block;
+        margin: 16px 0 7px;
+        color: var(--ink);
+        font-family: var(--english);
+        font-size: .95rem;
+        font-weight: 600;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 84px;
+        resize: vertical;
+        border: 1px solid var(--gold-pale);
+        border-radius: 0;
+        padding: 12px;
+        color: var(--ink);
+        background: rgba(255,255,255,.62);
+      }
+
+      textarea:focus { border-color: var(--gold); outline: 2px solid rgba(201,151,62,.18); }
+
+      .caption-meta {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        margin: 5px 0 18px;
+        color: var(--muted);
+        font-size: .69rem;
+      }
+
+      .status-message {
+        margin: 12px 0 0;
+        color: var(--red-dark);
+        font-size: .78rem;
+        text-align: center;
+      }
+
+      .reception-note {
+        margin: 14px 0 0;
+        padding: 11px 13px;
+        border: 1px solid rgba(201,151,62,.45);
+        color: var(--red-dark);
+        background: rgba(255,255,255,.34);
+        font-size: .78rem;
+        line-height: 1.55;
+        text-align: center;
+      }
+
+      .success {
+        padding: 22px 5px 8px;
+        text-align: center;
+      }
+
+      .success-mark {
+        display: grid;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 18px;
+        place-items: center;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        color: var(--red);
+        font-family: var(--english);
+        font-size: 2rem;
+      }
+
+      .success p { max-width: 430px; margin: 12px auto 22px; color: var(--muted); font-size: .88rem; }
+
+      .mock-banner {
+        width: max-content;
+        max-width: 100%;
+        margin: 16px auto 0;
+        border: 1px solid rgba(201,151,62,.5);
+        padding: 7px 12px;
+        color: var(--muted);
+        background: rgba(255,250,245,.65);
+        font-size: .64rem;
+        letter-spacing: .08em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .footer {
+        padding: 26px 0 0;
+        color: var(--gold);
+        font-family: var(--english);
+        font-size: .82rem;
+        letter-spacing: .14em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 640px) {
+        .page { padding-inline: 12px; }
+        .hero { padding: 25px 14px 13px; }
+        h1 { font-size: clamp(2.15rem, 12vw, 3.15rem); }
+        h2 { font-size: clamp(1.65rem, 8vw, 2.2rem); }
+        .intro { font-size: 1.1875rem; }
+        html[lang="zh-Hans"] .intro { font-size: 1.5rem; }
+        .choice-grid { grid-template-columns: 1fr; }
+        .choice { min-height: 118px; display: grid; grid-template-columns: 64px 1fr; column-gap: 14px; align-items: center; text-align: left; }
+        .choice-icon-circle { grid-row: 1 / span 2; margin: 0; }
+        .choice strong, .choice small { grid-column: 2; }
+        .card { padding: 24px 18px; }
+        .floral-left { width: 58vw; left: -24vw; opacity: .32; }
+        .floral-right { width: 62vw; right: -27vw; opacity: .32; }
+        .blossoms-right { display: none; }
+        .peony-bottom { width: 72vw; left: -31vw; opacity: .2; }
+      }
+
+      @media (max-width: 360px) {
+        .hero { padding-inline: 7px; }
+        h1 { font-size: clamp(1.95rem, 12vw, 2.45rem); }
+        .knot-divider { width: min(300px, 70vw); }
+        .card { padding-inline: 14px; }
+        .panel-head { gap: 8px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to sharing options</a>
+    <div class="page">
+      <img class="background-art floral-left" src="assets/hero-left-florals-optimized.webp" width="560" height="460" alt="" fetchpriority="high" />
+      <img class="background-art floral-right" src="assets/hero-right-peony-optimized.webp" width="500" height="333" alt="" fetchpriority="high" />
+      <img class="background-art blossoms-right" src="assets/hero-right-blossoms-optimized.webp" width="180" height="245" alt="" loading="lazy" />
+      <img class="background-art peony-bottom" src="assets/motif-lower-peony-optimized.webp" width="400" height="266" alt="" loading="lazy" />
+
+      <main class="shell" id="main-content" tabindex="-1">
+        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">
+          <span class="active" data-language="en">EN</span>
+          <span aria-hidden="true"> / </span>
+          <span data-language="zh">中文</span>
+        </button>
+        <section class="hero" aria-labelledby="page-title">
+          <img class="invitation-frame" src="assets/hero-border-optimized.webp" width="1000" height="684" alt="" fetchpriority="high" />
+          <div class="emblem" aria-hidden="true"></div>
+          <p class="eyebrow">Wesley &amp; Dionne · <span class="number">01.05.2027</span></p>
+          <h1 id="page-title">Our Wedding,<br />Through Your Eyes</h1>
+          <p class="chinese-title">我们的婚礼 · 你眼中的瞬间</p>
+          <img class="knot-divider" src="assets/hero-name-divider-optimized.webp" width="560" height="187" alt="" />
+          <p class="intro" data-i18n="intro">
+            Keep one little piece of the day for us: a photograph or five to ten seconds of something you noticed, loved, or want us to remember.
+          </p>
+          <p class="date" data-i18n="keptForever">ONE MOMENT · KEPT FOREVER</p>
+        </section>
+
+        <section class="card" aria-live="polite">
+          <div id="choice-panel">
+            <p class="step-note" data-i18n="shareOne">Share one moment</p>
+            <h2 data-i18n="choiceTitle">What did the wedding look like from where you were?</h2>
+            <p class="card-copy" data-i18n="choiceCopy">No posing required. The sweet, funny and ordinary moments are the ones we want to keep.</p>
+
+            <div class="choice-grid">
+              <button class="choice" id="photo-choice" type="button">
+                <span class="choice-icon-circle" aria-hidden="true">
+                  <img class="choice-icon" src="assets/photo-icon-optimized.png" width="96" height="94" alt="" />
+                </span>
+                <strong data-i18n="sharePhoto">Share a photo</strong>
+                <small data-i18n="sharePhotoHelp">Choose one photograph from your camera roll</small>
+              </button>
+              <button class="choice" id="video-choice" type="button">
+                <span class="choice-icon-circle" aria-hidden="true">
+                  <img class="choice-icon" src="assets/video-icon-optimized.png" width="96" height="92" alt="" />
+                </span>
+                <strong data-i18n="shareVideo">Share a video</strong>
+                <small data-i18n="shareVideoHelp">Choose an existing video and trim it to <span class="number">5–10</span> seconds</small>
+              </button>
+            </div>
+
+            <p class="quiet-line" data-i18n="publicAccess">No name, login or private invitation link required</p>
+          </div>
+
+          <div id="photo-panel" hidden>
+            <div class="panel-head">
+              <button class="back-button" type="button" data-back data-i18n="back">← Back</button>
+              <span class="panel-label" data-i18n="photograph">Photograph</span>
+            </div>
+            <p class="step-note" data-i18n="oneFrame">One frame</p>
+            <h2 data-i18n="choosePhoto">Choose your photograph</h2>
+            <p class="card-copy" data-i18n="photoCopy">We’ll keep it as a downloadable photograph and never turn it into a video.</p>
+            <div class="upload-zone" id="photo-zone">
+              <div>
+                <p data-i18n="photoFormats">JPEG, PNG, HEIC or WebP · up to <span class="number">25</span> MB</p>
+                <label class="file-trigger" for="photo-input" data-i18n="chooseFromPhotos">Choose from Photos</label>
+                <input id="photo-input" type="file" accept="image/*" hidden />
+              </div>
+            </div>
+          </div>
+
+          <div id="video-panel" hidden>
+            <div class="panel-head">
+              <button class="back-button" type="button" data-back data-i18n="back">← Back</button>
+              <span class="panel-label" data-i18n="videoLength"><span class="number">5–10</span> seconds</span>
+            </div>
+            <p class="step-note" data-i18n="movingMoment">A moving moment</p>
+            <h2 data-i18n="chooseVideo">Choose a video</h2>
+            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, select the <span class="number">5–10</span> seconds you want us to keep.</p>
+            <label class="primary" for="video-input" style="display:grid;place-items:center;" data-i18n="chooseExistingVideo">Choose existing video</label>
+            <input id="video-input" type="file" accept="video/*" hidden />
+            <p class="status-message" id="video-status" data-i18n="videoLimit">Finished files will be limited to <span class="number">25</span> MB.</p>
+            <p class="reception-note" data-i18n="receptionChance">Your video may be selected to play during the reception later.</p>
+          </div>
+
+          <div id="preview-panel" hidden>
+            <div class="panel-head">
+              <button class="back-button" type="button" data-back data-i18n="chooseAgain">← Choose again</button>
+              <span class="panel-label" id="preview-kind" data-i18n="preview">Preview</span>
+            </div>
+            <p class="step-note" data-i18n="lastLook">Have one last look</p>
+            <h2 data-i18n="whatYouSaw">This is what you saw.</h2>
+            <p class="card-copy" id="preview-copy" data-i18n="momentReady">Your chosen moment is ready.</p>
+            <div class="media-stage" id="media-stage">
+              <span class="empty-preview" data-i18n="previewPlaceholder">Your media preview will appear here</span>
+            </div>
+            <div class="trim-box" id="trim-box" hidden>
+              <div class="trim-row"><span data-i18n="chooseStart">Choose where the clip begins</span><strong id="trim-readout"><span class="number">0.0</span>s → <span class="number">5.0</span>s</strong></div>
+              <input id="trim-start" type="range" min="0" max="0" value="0" step="0.1" aria-label="Video start time" />
+              <div class="duration-picker" style="margin-bottom:0;">
+                <button class="duration-button active" type="button" data-trim-duration="5"><span class="number">5</span> <span data-i18n="sec">sec</span></button>
+                <button class="duration-button" type="button" data-trim-duration="7"><span class="number">7</span> <span data-i18n="sec">sec</span></button>
+                <button class="duration-button" type="button" data-trim-duration="10"><span class="number">10</span> <span data-i18n="sec">sec</span></button>
+              </div>
+            </div>
+            <label class="caption-label" for="caption" data-i18n="captionLabel">A few words, if you like</label>
+            <textarea id="caption" maxlength="50" placeholder="Optional caption" data-i18n-placeholder="captionPlaceholder"></textarea>
+            <div class="caption-meta"><span data-i18n="captionSaved">Saved alongside your download</span><span class="number" id="caption-count">0 / 50</span></div>
+            <button class="primary" id="submit-button" type="button" data-i18n="sendMoment">Send this moment</button>
+            <p class="status-message" data-i18n="mockOnly">Mockup only. Nothing will be uploaded yet.</p>
+          </div>
+
+          <div id="success-panel" hidden>
+            <div class="success">
+              <div class="success-mark" aria-hidden="true">✓</div>
+              <p class="step-note" data-i18n="momentReceived">Moment received</p>
+              <h2 data-i18n="thankYou">Thank you for seeing the day with us.</h2>
+              <p data-i18n="successCopy">In the finished website, your photo or video will remain downloadable for Wesley and Dionne. Selected videos may also be played during the reception.</p>
+              <button class="secondary" id="reset-button" type="button" data-i18n="returnMock">Return to mockup</button>
+            </div>
+          </div>
+        </section>
+
+        <p class="mock-banner" data-i18n="mockBanner">Interactive design mockup · storage is not connected</p>
+        <footer class="footer">Wesley &amp; Dionne · <span class="number">1</span> May <span class="number">2027</span></footer>
+      </main>
+    </div>
+
+    <script>
+      const translations = {
+        en: {
+          intro: "Keep one little piece of the day for us: a photograph or five to ten seconds of something you noticed, loved, or want us to remember.",
+          keptForever: "ONE MOMENT · KEPT FOREVER",
+          shareOne: "Share one moment",
+          choiceTitle: "What did the wedding look like from where you were?",
+          choiceCopy: "No posing required. The sweet, funny and ordinary moments are the ones we want to keep.",
+          sharePhoto: "Share a photo",
+          sharePhotoHelp: "Choose one photograph from your camera roll",
+          shareVideo: "Share a video",
+          shareVideoHelp: "Choose an existing video and trim it to <span class=\"number\">5–10</span> seconds",
+          publicAccess: "No name, login or private invitation link required",
+          back: "← Back",
+          photograph: "Photograph",
+          oneFrame: "One frame",
+          choosePhoto: "Choose your photograph",
+          photoCopy: "We’ll keep it as a downloadable photograph and never turn it into a video.",
+          photoFormats: "JPEG, PNG, HEIC or WebP · up to <span class=\"number\">25</span> MB",
+          chooseFromPhotos: "Choose from Photos",
+          videoLength: "<span class=\"number\">5–10</span> seconds",
+          movingMoment: "A moving moment",
+          chooseVideo: "Choose a video",
+          videoCopy: "Choose one from your camera roll. If it is longer, select the <span class=\"number\">5–10</span> seconds you want us to keep.",
+          chooseExistingVideo: "Choose existing video",
+          videoLimit: "Finished files will be limited to <span class=\"number\">25</span> MB.",
+          receptionChance: "Your video may be selected to play during the reception later.",
+          chooseAgain: "← Choose again",
+          preview: "Preview",
+          lastLook: "Have one last look",
+          whatYouSaw: "This is what you saw.",
+          momentReady: "Your chosen moment is ready.",
+          previewPlaceholder: "Your media preview will appear here",
+          chooseStart: "Choose where the clip begins",
+          sec: "sec",
+          secondsUnit: "s",
+          captionLabel: "A few words, if you like",
+          captionPlaceholder: "Optional caption",
+          captionSaved: "Saved alongside your download",
+          sendMoment: "Send this moment",
+          mockOnly: "Mockup only. Nothing will be uploaded yet.",
+          momentReceived: "Moment received",
+          thankYou: "Thank you for seeing the day with us.",
+          successCopy: "In the finished website, your photo or video will remain downloadable for Wesley and Dionne. Selected videos may also be played during the reception.",
+          returnMock: "Return to mockup",
+          mockBanner: "Interactive design mockup · storage is not connected",
+          photoPreviewKind: "Photograph preview",
+          photoPreviewCopy: "Your photograph will stay a downloadable image.",
+          videoPreviewKind: "Video preview",
+          videoTrimCopy: "Choose the five-to-ten-second section you want us to keep.",
+          videoReadyCopy: "Your video is already within the five-to-ten-second limit.",
+          videoTooLarge: "For reliable Safari processing, please choose a video under <span class=\"number\">150</span> MB.",
+          videoTooShort: "That video is shorter than <span class=\"number\">5</span> seconds. Please choose a longer moment.",
+          videoUnreadable: "Safari could not read that file. Please try another video."
+        },
+        zh: {
+          intro: "请为我们留下一小段婚礼记忆：一张照片，或<span class=\"number\">5至10</span>秒你所看见、喜欢，或希望我们记住的瞬间。",
+          keptForever: "一个瞬间 · 永远珍藏",
+          shareOne: "分享一个瞬间",
+          choiceTitle: "从你的位置看，我们的婚礼是什么样子？",
+          choiceCopy: "不需要刻意摆拍。甜蜜、有趣和日常的瞬间，都是我们最想珍藏的回忆。",
+          sharePhoto: "分享照片",
+          sharePhotoHelp: "从手机相册中选择一张照片",
+          shareVideo: "分享视频",
+          shareVideoHelp: "选择已有视频，并剪辑为<span class=\"number\">5至10</span>秒",
+          publicAccess: "无需姓名、登录或私人邀请链接",
+          back: "← 返回",
+          photograph: "照片",
+          oneFrame: "一帧记忆",
+          choosePhoto: "选择你的照片",
+          photoCopy: "照片将保留为可下载的图片，不会转换成视频。",
+          photoFormats: "<span class=\"latin\">JPEG</span>、<span class=\"latin\">PNG</span>、<span class=\"latin\">HEIC</span> 或 <span class=\"latin\">WebP</span> · 最大 <span class=\"number\">25</span> <span class=\"latin\">MB</span>",
+          chooseFromPhotos: "从相册选择",
+          videoLength: "<span class=\"number\">5至10</span>秒",
+          movingMoment: "会动的瞬间",
+          chooseVideo: "选择一个视频",
+          videoCopy: "从手机相册选择视频。如果视频较长，请选出最想让我们留下的<span class=\"number\">5至10</span>秒。",
+          chooseExistingVideo: "从相册选择视频",
+          videoLimit: "完成的视频文件将限制在 <span class=\"number\">25</span> <span class=\"latin\">MB</span> 以内。",
+          receptionChance: "你的视频有机会在稍后的婚宴上播放。",
+          chooseAgain: "← 重新选择",
+          preview: "预览",
+          lastLook: "最后确认",
+          whatYouSaw: "这就是你看到的婚礼。",
+          momentReady: "你选择的瞬间已经准备好了。",
+          previewPlaceholder: "你的照片或视频预览会显示在这里",
+          chooseStart: "选择视频开始的位置",
+          sec: "秒",
+          secondsUnit: "秒",
+          captionLabel: "想说几句话吗？",
+          captionPlaceholder: "选填文字",
+          captionSaved: "文字会与下载文件一起保存",
+          sendMoment: "发送这个瞬间",
+          mockOnly: "目前是互动模型，内容不会上传。",
+          momentReceived: "已收到你的瞬间",
+          thankYou: "谢谢你与我们分享眼中的这一天。",
+          successCopy: "正式网站完成后，<span class=\"latin\">Wesley</span> 和 <span class=\"latin\">Dionne</span> 可以下载你的照片或视频。入选的视频也可能在婚宴上播放。",
+          returnMock: "返回模型",
+          mockBanner: "互动设计模型 · 尚未连接储存空间",
+          photoPreviewKind: "照片预览",
+          photoPreviewCopy: "你的照片将保留为可下载的图片。",
+          videoPreviewKind: "视频预览",
+          videoTrimCopy: "请选择你想让我们保留的<span class=\"number\">5至10</span>秒片段。",
+          videoReadyCopy: "你的视频已符合<span class=\"number\">5至10</span>秒的长度限制。",
+          videoTooLarge: "为了让 <span class=\"latin\">Safari</span> 稳定处理，请选择小于 <span class=\"number\">150</span> <span class=\"latin\">MB</span> 的视频。",
+          videoTooShort: "这个视频少于<span class=\"number\">5</span>秒，请选择较长的视频。",
+          videoUnreadable: "<span class=\"latin\">Safari</span> 无法读取这个文件，请选择另一个视频。"
+        }
+      };
+
+      const panels = ["choice-panel", "photo-panel", "video-panel", "preview-panel", "success-panel"];
+      const byId = (id) => document.getElementById(id);
+      let currentLanguage = "en";
+      let trimDuration = 5;
+      let selectedMediaType = null;
+      let selectedUrl = null;
+      let sourceDuration = 0;
+
+      const t = (key) => translations[currentLanguage][key] || translations.en[key] || key;
+
+      function setTranslation(element, key) {
+        element.dataset.i18n = key;
+        element.innerHTML = t(key);
+      }
+
+      function applyLanguage(language) {
+        currentLanguage = language;
+        document.documentElement.lang = language === "zh" ? "zh-Hans" : "en";
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          element.innerHTML = t(element.dataset.i18n);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+          element.placeholder = t(element.dataset.i18nPlaceholder);
+        });
+        document.querySelectorAll("[data-language]").forEach((element) => {
+          element.classList.toggle("active", element.dataset.language === language);
+        });
+        byId("language-toggle").setAttribute("aria-label", language === "zh" ? "切换语言" : "Switch language");
+        updatePreviewLanguage();
+        if (sourceDuration > 10) updateTrimReadout();
+      }
+
+      function updatePreviewLanguage() {
+        if (!selectedMediaType) return;
+        if (selectedMediaType === "photo") {
+          setTranslation(byId("preview-kind"), "photoPreviewKind");
+          setTranslation(byId("preview-copy"), "photoPreviewCopy");
+        } else {
+          setTranslation(byId("preview-kind"), "videoPreviewKind");
+          setTranslation(byId("preview-copy"), sourceDuration > 10 ? "videoTrimCopy" : "videoReadyCopy");
+        }
+      }
+
+      function showPanel(id) {
+        panels.forEach((panelId) => { byId(panelId).hidden = panelId !== id; });
+        window.scrollTo({ top: Math.max(0, document.querySelector(".card").offsetTop - 18), behavior: "smooth" });
+      }
+
+      function releaseUrl() {
+        if (selectedUrl) URL.revokeObjectURL(selectedUrl);
+        selectedUrl = null;
+      }
+
+      function goHome() {
+        const placeholder = document.createElement("span");
+        placeholder.className = "empty-preview";
+        setTranslation(placeholder, "previewPlaceholder");
+        byId("media-stage").replaceChildren(placeholder);
+        byId("trim-box").hidden = true;
+        showPanel("choice-panel");
+      }
+
+      byId("language-toggle").addEventListener("click", () => applyLanguage(currentLanguage === "en" ? "zh" : "en"));
+      document.querySelectorAll("[data-back]").forEach((button) => button.addEventListener("click", goHome));
+      byId("photo-choice").addEventListener("click", () => showPanel("photo-panel"));
+      byId("video-choice").addEventListener("click", () => showPanel("video-panel"));
+
+      function renderPreview(type, url, duration = 0) {
+        selectedMediaType = type;
+        selectedUrl = url;
+        sourceDuration = duration;
+        const stage = byId("media-stage");
+        stage.replaceChildren();
+        let media;
+        if (type === "photo") {
+          media = new Image();
+          media.alt = currentLanguage === "zh" ? "已选择的照片预览" : "Selected photograph preview";
+          byId("trim-box").hidden = true;
+        } else {
+          media = document.createElement("video");
+          media.controls = true;
+          media.playsInline = true;
+          byId("trim-box").hidden = duration <= 10;
+          if (duration > 10) configureTrim(duration);
+        }
+        updatePreviewLanguage();
+        media.src = url;
+        stage.appendChild(media);
+        showPanel("preview-panel");
+      }
+
+      byId("photo-input").addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        releaseUrl();
+        renderPreview("photo", URL.createObjectURL(file));
+      });
+
+      byId("video-input").addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (file.size > 150 * 1024 * 1024) {
+          setTranslation(byId("video-status"), "videoTooLarge");
+          return;
+        }
+        releaseUrl();
+        const url = URL.createObjectURL(file);
+        const probe = document.createElement("video");
+        probe.preload = "metadata";
+        probe.onloadedmetadata = () => {
+          const duration = Number.isFinite(probe.duration) ? probe.duration : 0;
+          if (duration < 5) {
+            URL.revokeObjectURL(url);
+            setTranslation(byId("video-status"), "videoTooShort");
+            return;
+          }
+          renderPreview("video", url, duration);
+        };
+        probe.onerror = () => {
+          URL.revokeObjectURL(url);
+          setTranslation(byId("video-status"), "videoUnreadable");
+        };
+        probe.src = url;
+      });
+
+      function configureTrim(duration) {
+        trimDuration = Math.min(5, duration);
+        const slider = byId("trim-start");
+        slider.max = Math.max(0, duration - trimDuration).toFixed(1);
+        slider.value = "0";
+        updateTrimReadout();
+        document.querySelectorAll("[data-trim-duration]").forEach((button) => {
+          const value = Number(button.dataset.trimDuration);
+          button.disabled = value > duration;
+          button.classList.toggle("active", value === trimDuration);
+        });
+      }
+
+      function updateTrimReadout() {
+        const start = Number(byId("trim-start").value);
+        const unit = t("secondsUnit");
+        byId("trim-readout").innerHTML = `<span class="number">${start.toFixed(1)}</span>${unit} → <span class="number">${(start + trimDuration).toFixed(1)}</span>${unit}`;
+        const video = byId("media-stage").querySelector("video");
+        if (video) video.currentTime = start;
+      }
+
+      byId("trim-start").addEventListener("input", updateTrimReadout);
+      document.querySelectorAll("[data-trim-duration]").forEach((button) => {
+        button.addEventListener("click", () => {
+          trimDuration = Number(button.dataset.trimDuration);
+          document.querySelectorAll("[data-trim-duration]").forEach((item) => item.classList.toggle("active", item === button));
+          byId("trim-start").max = Math.max(0, sourceDuration - trimDuration).toFixed(1);
+          if (Number(byId("trim-start").value) > Number(byId("trim-start").max)) byId("trim-start").value = byId("trim-start").max;
+          updateTrimReadout();
+        });
+      });
+
+      byId("caption").addEventListener("input", () => { byId("caption-count").textContent = `${byId("caption").value.length} / 50`; });
+      byId("submit-button").addEventListener("click", () => showPanel("success-panel"));
+      byId("reset-button").addEventListener("click", () => {
+        releaseUrl();
+        selectedMediaType = null;
+        sourceDuration = 0;
+        byId("caption").value = "";
+        byId("caption-count").textContent = "0 / 50";
+        goHome();
+      });
+
+      applyLanguage("en");
+    </script>
+  </body>
+</html>
