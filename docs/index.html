@@ -98,6 +98,7 @@
       .background-art {
         position: fixed;
         z-index: 0;
+        height: auto;
         pointer-events: none;
         user-select: none;
         mix-blend-mode: multiply;
@@ -167,19 +168,14 @@
         font-family: var(--clarity);
       }
 
-      .invitation-frame {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-        opacity: .24;
-        pointer-events: none;
-      }
-
       .hero {
         position: relative;
-        padding: clamp(30px, 6vw, 58px) 22px 20px;
+        border: 18px solid transparent;
+        border-image-source: url("assets/hero-border-optimized.webp");
+        border-image-slice: 72;
+        border-image-width: 18px;
+        border-image-repeat: stretch;
+        padding: clamp(20px, 5vw, 40px) 10px 36px;
         text-align: center;
       }
 
@@ -239,7 +235,7 @@
       }
 
       .date {
-        margin: 13px 0 0;
+        margin: 18px 0 0;
         color: var(--gold);
         font-family: var(--english);
         font-size: 1rem;
@@ -567,19 +563,13 @@
 
       .success p { max-width: 430px; margin: 12px auto 22px; color: var(--muted); font-size: .88rem; }
 
-      .footer {
-        padding: 26px 0 0;
-        color: var(--gold);
-        font-family: var(--english);
-        font-size: .82rem;
-        letter-spacing: .14em;
-        text-align: center;
-        text-transform: uppercase;
-      }
-
       @media (max-width: 640px) {
         .page { padding-inline: 12px; }
-        .hero { padding: 25px 14px 13px; }
+        .hero {
+          border-width: 14px;
+          border-image-width: 14px;
+          padding: 18px 5px 32px;
+        }
         h1 { font-size: clamp(2.15rem, 12vw, 3.15rem); }
         h2 { font-size: clamp(1.65rem, 8vw, 2.2rem); }
         .intro { font-size: 1.1875rem; }
@@ -596,7 +586,7 @@
       }
 
       @media (max-width: 360px) {
-        .hero { padding-inline: 7px; }
+        .hero { padding-inline: 2px; }
         h1 { font-size: clamp(1.95rem, 12vw, 2.45rem); }
         .knot-divider { width: min(300px, 70vw); }
         .card { padding-inline: 14px; }
@@ -625,7 +615,6 @@
 
       <main class="shell" id="main-content" tabindex="-1">
         <section class="hero" aria-labelledby="page-title">
-          <img class="invitation-frame" src="assets/hero-border-optimized.webp" width="1000" height="684" alt="" fetchpriority="high" />
           <div class="emblem" aria-hidden="true"></div>
           <p class="eyebrow">Wesley &amp; Dionne · <span class="number">01.05.2027</span></p>
           <h1 id="page-title">Our Wedding,<br />Through Your Eyes</h1>
@@ -642,6 +631,8 @@
             <p class="step-note" data-i18n="shareOne">Share one moment</p>
             <h2 data-i18n="choiceTitle">What did the wedding look like from where you were?</h2>
             <p class="card-copy" data-i18n="choiceCopy">No posing required. The sweet, funny and ordinary moments are the ones we want to keep.</p>
+            <p class="quiet-line" data-i18n="oneSubmissionRule">Each device may share one photo or one video, once only.</p>
+            <p class="reception-note" data-i18n="receptionSelection">A selection of shared photos and videos may be included in a special presentation during the reception.</p>
 
             <div class="choice-grid">
               <button class="choice" id="photo-choice" type="button">
@@ -691,7 +682,6 @@
             <label class="primary" for="video-input" style="display:grid;place-items:center;" data-i18n="chooseExistingVideo">Choose existing video</label>
             <input id="video-input" type="file" accept="video/*" hidden />
             <p class="status-message" id="video-status" data-i18n="videoLimit">Finished files will be limited to <span class="number">25</span> MB.</p>
-            <p class="reception-note" data-i18n="receptionChance">Your video may be selected to play during the reception later.</p>
           </div>
 
           <div id="preview-panel" hidden>
@@ -718,13 +708,12 @@
               <div class="success-mark" aria-hidden="true">✓</div>
               <p class="step-note" id="success-step" data-i18n="momentReceived">Moment received</p>
               <h2 id="success-title" data-i18n="thankYou">Thank you for seeing the day with us.</h2>
-              <p id="success-copy" data-i18n="successCopy">Your photo or video has been saved for Wesley and Dionne. Selected videos may also be played during the reception.</p>
-              <p data-i18n="oneUploadComplete">Each device may share one photo or one video only.</p>
+              <p id="success-copy" data-i18n="successCopy">Your photo or video has been saved for Wesley and Dionne.</p>
+              <p id="one-upload-note" data-i18n="oneUploadComplete">Each device may share one photo or one video only.</p>
             </div>
           </div>
         </section>
 
-        <footer class="footer">Wesley &amp; Dionne · <span class="number">1</span> May <span class="number">2027</span></footer>
       </main>
     </div>
 
@@ -736,6 +725,8 @@
           shareOne: "Share one moment",
           choiceTitle: "What did the wedding look like from where you were?",
           choiceCopy: "No posing required. The sweet, funny and ordinary moments are the ones we want to keep.",
+          oneSubmissionRule: "Each device may share one photo or one video, once only.",
+          receptionSelection: "A selection of shared photos and videos may be included in a special presentation during the reception.",
           sharePhoto: "Share a photo",
           sharePhotoHelp: "Choose one photograph from your camera roll",
           shareVideo: "Share a video",
@@ -754,7 +745,6 @@
           videoCopy: "Choose one from your camera roll. If it is longer, trim it to <span class=\"number\">5–10</span> seconds in Photos before returning here.",
           chooseExistingVideo: "Choose existing video",
           videoLimit: "Finished files will be limited to <span class=\"number\">25</span> MB.",
-          receptionChance: "Your video may be selected to play during the reception later.",
           chooseAgain: "← Choose again",
           preview: "Preview",
           lastLook: "Have one last look",
@@ -776,7 +766,7 @@
           storageFull: "We have received all available moments. Thank you for trying to share yours.",
           momentReceived: "Moment received",
           thankYou: "Thank you for seeing the day with us.",
-          successCopy: "Your photo or video has been saved for Wesley and Dionne. Selected videos may also be played during the reception.",
+          successCopy: "Your photo or video has been saved for Wesley and Dionne.",
           oneUploadComplete: "Each device may share one photo or one video only.",
           photoPreviewKind: "Photograph preview",
           photoPreviewCopy: "Your photograph will stay a downloadable image.",
@@ -791,6 +781,8 @@
           shareOne: "分享一个瞬间",
           choiceTitle: "从你的位置看，我们的婚礼是什么样子？",
           choiceCopy: "不需要刻意摆拍。甜蜜、有趣和日常的瞬间，都是我们最想珍藏的回忆。",
+          oneSubmissionRule: "每台设备只能提交一次，可选择一张照片或一段视频。",
+          receptionSelection: "部分宾客分享的照片和视频可能会被选入婚宴上的特别播放内容。",
           sharePhoto: "分享照片",
           sharePhotoHelp: "从手机相册中选择一张照片",
           shareVideo: "分享视频",
@@ -809,7 +801,6 @@
           videoCopy: "从手机相册选择视频。如果视频较长，请先在相册中剪辑为<span class=\"number\">5至10</span>秒，再返回这里。",
           chooseExistingVideo: "从相册选择视频",
           videoLimit: "完成的视频文件将限制在 <span class=\"number\">25</span> <span class=\"latin\">MB</span> 以内。",
-          receptionChance: "你的视频有机会在稍后的婚宴上播放。",
           chooseAgain: "← 重新选择",
           preview: "预览",
           lastLook: "最后确认",
@@ -831,7 +822,7 @@
           storageFull: "我们已经收到所有可保存的瞬间，谢谢你愿意分享。",
           momentReceived: "已收到你的瞬间",
           thankYou: "谢谢你与我们分享眼中的这一天。",
-          successCopy: "你的照片或视频已经为 <span class=\"latin\">Wesley</span> 和 <span class=\"latin\">Dionne</span> 保存。入选的视频也可能在婚宴上播放。",
+          successCopy: "你的照片或视频已经为 <span class=\"latin\">Wesley</span> 和 <span class=\"latin\">Dionne</span> 保存。",
           oneUploadComplete: "每台设备只能分享一张照片或一个视频。",
           photoPreviewKind: "照片预览",
           photoPreviewCopy: "你的照片将保留为可下载的图片。",
@@ -928,12 +919,13 @@
         setTranslation(byId("success-step"), successIsExisting ? "alreadySubmitted" : "momentReceived");
         setTranslation(byId("success-title"), "thankYou");
         setTranslation(byId("success-copy"), successIsExisting ? "oneUploadComplete" : "successCopy");
+        byId("one-upload-note").hidden = successIsExisting;
       }
 
       function showPanel(id) {
         panels.forEach((panelId) => { byId(panelId).hidden = panelId !== id; });
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        window.scrollTo({
+        document.querySelector(".page").scrollTo({
           top: Math.max(0, document.querySelector(".card").offsetTop - 18),
           behavior: reducedMotion ? "auto" : "smooth"
         });

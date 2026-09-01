@@ -1,3 +1,5 @@
+import { handleAdminRequest } from './admin';
+
 const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 const MAX_CAPTION_LENGTH = 50;
 const TURNSTILE_VERIFY_URL =
@@ -239,6 +241,10 @@ async function handleUpload(request: Request, env: Env) {
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.pathname === '/admin' || url.pathname.startsWith('/api/admin/')) {
+      return handleAdminRequest(request, env);
+    }
 
     if (request.method === 'OPTIONS') {
       if (!originIsAllowed(request, env)) {

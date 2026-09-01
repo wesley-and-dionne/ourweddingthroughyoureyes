@@ -1,2 +1,3 @@
 # Cloudflare's official testing secret. Do not use it after public launch.
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+ADMIN_PASSWORD=local-test-only
