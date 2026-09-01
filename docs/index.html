@@ -22,6 +22,7 @@
     />
     <style>
       :root {
+        --utility-height: calc(68px + env(safe-area-inset-top));
         --cream: #fff2e7;
         --cream-light: #fff8f1;
         --paper: rgba(255, 248, 241, 0.88);
@@ -49,6 +50,7 @@
       body {
         min-height: 100vh;
         margin: 0;
+        overflow: hidden;
         color: var(--ink);
         background:
           radial-gradient(circle at 50% -8%, rgba(255,255,255,.9), transparent 32rem),
@@ -84,10 +86,13 @@
       }
 
       .page {
-        position: relative;
-        min-height: 100vh;
-        overflow: hidden;
-        padding: max(18px, env(safe-area-inset-top)) 18px max(42px, env(safe-area-inset-bottom));
+        position: fixed;
+        inset: var(--utility-height) 0 0;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 0 18px max(42px, env(safe-area-inset-bottom));
+        -webkit-overflow-scrolling: touch;
       }
 
       .background-art {
@@ -109,14 +114,21 @@
         z-index: 1;
         width: min(100%, 760px);
         margin: 0 auto;
-        padding-top: 4rem;
+        padding-top: 1rem;
       }
 
       .shell:focus { outline: none; }
 
-      .language-toggle {
+      .utility-bar {
         position: fixed;
-        z-index: 10;
+        z-index: 15;
+        inset: 0 0 auto;
+        height: var(--utility-height);
+        background: var(--cream);
+      }
+
+      .language-toggle {
+        position: absolute;
         top: max(12px, env(safe-area-inset-top));
         right: max(12px, env(safe-area-inset-right));
         display: block;
@@ -598,6 +610,13 @@
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to sharing options</a>
+    <div class="utility-bar">
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">
+        <span class="active" data-language="en">EN</span>
+        <span aria-hidden="true"> / </span>
+        <span data-language="zh">中文</span>
+      </button>
+    </div>
     <div class="page">
       <img class="background-art floral-left" src="assets/hero-left-florals-optimized.webp" width="560" height="460" alt="" fetchpriority="high" />
       <img class="background-art floral-right" src="assets/hero-right-peony-optimized.webp" width="500" height="333" alt="" fetchpriority="high" />
@@ -605,11 +624,6 @@
       <img class="background-art peony-bottom" src="assets/motif-lower-peony-optimized.webp" width="400" height="266" alt="" loading="lazy" />
 
       <main class="shell" id="main-content" tabindex="-1">
-        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">
-          <span class="active" data-language="en">EN</span>
-          <span aria-hidden="true"> / </span>
-          <span data-language="zh">中文</span>
-        </button>
         <section class="hero" aria-labelledby="page-title">
           <img class="invitation-frame" src="assets/hero-border-optimized.webp" width="1000" height="684" alt="" fetchpriority="high" />
           <div class="emblem" aria-hidden="true"></div>
