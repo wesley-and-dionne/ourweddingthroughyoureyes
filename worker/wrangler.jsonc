@@ -1,0 +1,28 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "our-wedding-through-your-eyes-api",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-05-15",
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		"ALLOWED_ORIGINS": "https://wesley-and-dionne.github.io,http://localhost:3000,http://127.0.0.1:3000",
+		"MAX_STORAGE_BYTES": "8589934592",
+		"MAX_UPLOAD_COUNT": "5000"
+	},
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "our-wedding-through-your-eyes-api-media"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "our-wedding-through-your-eyes-api-db",
+			"database_id": "9f17f0d2-874f-40a0-89c1-b293c097f4f3",
+			"migrations_dir": "migrations"
+		}
+	]
+}

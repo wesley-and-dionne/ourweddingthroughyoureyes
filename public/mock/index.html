@@ -8,6 +8,11 @@
       name="description"
       content="Our Wedding, Through Your Eyes. Share one photograph or a 5 to 10 second video for Wesley and Dionne."
     />
+    <meta
+      name="wedding-upload-endpoint"
+      content="https://our-wedding-through-your-eyes-api.dionnnosaur.workers.dev/api/moments"
+    />
+    <meta name="turnstile-site-key" content="0x4AAAAAAEjsZQ-RFXybNroG" />
     <title>Our Wedding, Through Your Eyes | Wesley &amp; Dionne</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -394,28 +399,6 @@
         text-transform: uppercase;
       }
 
-      .duration-picker {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin: 18px 0;
-      }
-
-      .duration-button {
-        min-width: 64px;
-        min-height: 44px;
-        border: 1px solid var(--gold-pale);
-        color: var(--ink);
-        background: transparent;
-        cursor: pointer;
-      }
-
-      .duration-button.active {
-        border-color: var(--red);
-        color: #fffaf5;
-        background: var(--red);
-      }
-
       .primary,
       .secondary {
         width: 100%;
@@ -437,7 +420,6 @@
 
       .primary:focus-visible,
       .secondary:focus-visible,
-      .duration-button:focus-visible,
       .back-button:focus-visible {
         outline: 3px solid var(--gold);
         outline-offset: 3px;
@@ -496,24 +478,6 @@
         text-align: center;
       }
 
-      .trim-box {
-        margin: 16px 0;
-        padding: 16px;
-        border: 1px solid var(--gold-pale);
-        background: rgba(255,255,255,.42);
-      }
-
-      .trim-row {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-        color: var(--muted);
-        font-size: .76rem;
-      }
-
-      input[type="range"] { width: 100%; min-height: 44px; accent-color: var(--red); }
-
       .caption-label {
         display: block;
         margin: 16px 0 7px;
@@ -553,6 +517,13 @@
         text-align: center;
       }
 
+      .turnstile-wrap {
+        display: grid;
+        min-height: 70px;
+        margin: 18px 0 12px;
+        place-items: center;
+      }
+
       .reception-note {
         margin: 14px 0 0;
         padding: 11px 13px;
@@ -583,20 +554,6 @@
       }
 
       .success p { max-width: 430px; margin: 12px auto 22px; color: var(--muted); font-size: .88rem; }
-
-      .mock-banner {
-        width: max-content;
-        max-width: 100%;
-        margin: 16px auto 0;
-        border: 1px solid rgba(201,151,62,.5);
-        padding: 7px 12px;
-        color: var(--muted);
-        background: rgba(255,250,245,.65);
-        font-size: .64rem;
-        letter-spacing: .08em;
-        text-align: center;
-        text-transform: uppercase;
-      }
 
       .footer {
         padding: 26px 0 0;
@@ -685,7 +642,7 @@
                   <img class="choice-icon" src="assets/video-icon-optimized.png" width="96" height="92" alt="" />
                 </span>
                 <strong data-i18n="shareVideo">Share a video</strong>
-                <small data-i18n="shareVideoHelp">Choose an existing video and trim it to <span class="number">5–10</span> seconds</small>
+                <small data-i18n="shareVideoHelp">Choose one existing video that is <span class="number">5–10</span> seconds long</small>
               </button>
             </div>
 
@@ -716,7 +673,7 @@
             </div>
             <p class="step-note" data-i18n="movingMoment">A moving moment</p>
             <h2 data-i18n="chooseVideo">Choose a video</h2>
-            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, select the <span class="number">5–10</span> seconds you want us to keep.</p>
+            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, trim it to <span class="number">5–10</span> seconds in Photos before returning here.</p>
             <label class="primary" for="video-input" style="display:grid;place-items:center;" data-i18n="chooseExistingVideo">Choose existing video</label>
             <input id="video-input" type="file" accept="video/*" hidden />
             <p class="status-message" id="video-status" data-i18n="videoLimit">Finished files will be limited to <span class="number">25</span> MB.</p>
@@ -734,34 +691,25 @@
             <div class="media-stage" id="media-stage">
               <span class="empty-preview" data-i18n="previewPlaceholder">Your media preview will appear here</span>
             </div>
-            <div class="trim-box" id="trim-box" hidden>
-              <div class="trim-row"><span data-i18n="chooseStart">Choose where the clip begins</span><strong id="trim-readout"><span class="number">0.0</span>s → <span class="number">5.0</span>s</strong></div>
-              <input id="trim-start" type="range" min="0" max="0" value="0" step="0.1" aria-label="Video start time" />
-              <div class="duration-picker" style="margin-bottom:0;">
-                <button class="duration-button active" type="button" data-trim-duration="5"><span class="number">5</span> <span data-i18n="sec">sec</span></button>
-                <button class="duration-button" type="button" data-trim-duration="7"><span class="number">7</span> <span data-i18n="sec">sec</span></button>
-                <button class="duration-button" type="button" data-trim-duration="10"><span class="number">10</span> <span data-i18n="sec">sec</span></button>
-              </div>
-            </div>
             <label class="caption-label" for="caption" data-i18n="captionLabel">A few words, if you like</label>
             <textarea id="caption" maxlength="50" placeholder="Optional caption" data-i18n-placeholder="captionPlaceholder"></textarea>
             <div class="caption-meta"><span data-i18n="captionSaved">Saved alongside your download</span><span class="number" id="caption-count">0 / 50</span></div>
+            <div class="turnstile-wrap" id="turnstile-container" aria-label="Security check"></div>
             <button class="primary" id="submit-button" type="button" data-i18n="sendMoment">Send this moment</button>
-            <p class="status-message" data-i18n="mockOnly">Mockup only. Nothing will be uploaded yet.</p>
+            <p class="status-message" id="submit-status" role="status" aria-live="polite" hidden></p>
           </div>
 
           <div id="success-panel" hidden>
             <div class="success">
               <div class="success-mark" aria-hidden="true">✓</div>
-              <p class="step-note" data-i18n="momentReceived">Moment received</p>
-              <h2 data-i18n="thankYou">Thank you for seeing the day with us.</h2>
-              <p data-i18n="successCopy">In the finished website, your photo or video will remain downloadable for Wesley and Dionne. Selected videos may also be played during the reception.</p>
-              <button class="secondary" id="reset-button" type="button" data-i18n="returnMock">Return to mockup</button>
+              <p class="step-note" id="success-step" data-i18n="momentReceived">Moment received</p>
+              <h2 id="success-title" data-i18n="thankYou">Thank you for seeing the day with us.</h2>
+              <p id="success-copy" data-i18n="successCopy">Your photo or video has been saved for Wesley and Dionne. Selected videos may also be played during the reception.</p>
+              <p data-i18n="oneUploadComplete">Each device may share one photo or one video only.</p>
             </div>
           </div>
         </section>
 
-        <p class="mock-banner" data-i18n="mockBanner">Interactive design mockup · storage is not connected</p>
         <footer class="footer">Wesley &amp; Dionne · <span class="number">1</span> May <span class="number">2027</span></footer>
       </main>
     </div>
@@ -777,7 +725,7 @@
           sharePhoto: "Share a photo",
           sharePhotoHelp: "Choose one photograph from your camera roll",
           shareVideo: "Share a video",
-          shareVideoHelp: "Choose an existing video and trim it to <span class=\"number\">5–10</span> seconds",
+          shareVideoHelp: "Choose one existing video that is <span class=\"number\">5–10</span> seconds long",
           publicAccess: "No name, login or private invitation link required",
           back: "← Back",
           photograph: "Photograph",
@@ -789,7 +737,7 @@
           videoLength: "<span class=\"number\">5–10</span> seconds",
           movingMoment: "A moving moment",
           chooseVideo: "Choose a video",
-          videoCopy: "Choose one from your camera roll. If it is longer, select the <span class=\"number\">5–10</span> seconds you want us to keep.",
+          videoCopy: "Choose one from your camera roll. If it is longer, trim it to <span class=\"number\">5–10</span> seconds in Photos before returning here.",
           chooseExistingVideo: "Choose existing video",
           videoLimit: "Finished files will be limited to <span class=\"number\">25</span> MB.",
           receptionChance: "Your video may be selected to play during the reception later.",
@@ -799,25 +747,27 @@
           whatYouSaw: "This is what you saw.",
           momentReady: "Your chosen moment is ready.",
           previewPlaceholder: "Your media preview will appear here",
-          chooseStart: "Choose where the clip begins",
-          sec: "sec",
-          secondsUnit: "s",
           captionLabel: "A few words, if you like",
           captionPlaceholder: "Optional caption",
           captionSaved: "Saved alongside your download",
           sendMoment: "Send this moment",
-          mockOnly: "Mockup only. Nothing will be uploaded yet.",
+          uploading: "Uploading your moment…",
+          uploadFailed: "We couldn’t save that moment. Please try again.",
+          uploadTooLarge: "Please choose a file smaller than <span class=\"number\">25</span> MB.",
+          trimNotReady: "Please trim this video to <span class=\"number\">5–10</span> seconds in Photos, then choose it again.",
+          verifyFirst: "Please complete the security check before sending.",
+          backendNotReady: "Uploads are not open yet. Please try again later.",
+          alreadySubmitted: "A photo or video has already been shared from this device.",
+          deviceStorageRequired: "Safari must allow website storage so we can apply the one-upload limit.",
+          storageFull: "We have received all available moments. Thank you for trying to share yours.",
           momentReceived: "Moment received",
           thankYou: "Thank you for seeing the day with us.",
-          successCopy: "In the finished website, your photo or video will remain downloadable for Wesley and Dionne. Selected videos may also be played during the reception.",
-          returnMock: "Return to mockup",
-          mockBanner: "Interactive design mockup · storage is not connected",
+          successCopy: "Your photo or video has been saved for Wesley and Dionne. Selected videos may also be played during the reception.",
+          oneUploadComplete: "Each device may share one photo or one video only.",
           photoPreviewKind: "Photograph preview",
           photoPreviewCopy: "Your photograph will stay a downloadable image.",
           videoPreviewKind: "Video preview",
-          videoTrimCopy: "Choose the five-to-ten-second section you want us to keep.",
           videoReadyCopy: "Your video is already within the five-to-ten-second limit.",
-          videoTooLarge: "For reliable Safari processing, please choose a video under <span class=\"number\">150</span> MB.",
           videoTooShort: "That video is shorter than <span class=\"number\">5</span> seconds. Please choose a longer moment.",
           videoUnreadable: "Safari could not read that file. Please try another video."
         },
@@ -830,7 +780,7 @@
           sharePhoto: "分享照片",
           sharePhotoHelp: "从手机相册中选择一张照片",
           shareVideo: "分享视频",
-          shareVideoHelp: "选择已有视频，并剪辑为<span class=\"number\">5至10</span>秒",
+          shareVideoHelp: "选择一个长度为<span class=\"number\">5至10</span>秒的已有视频",
           publicAccess: "无需姓名、登录或私人邀请链接",
           back: "← 返回",
           photograph: "照片",
@@ -842,7 +792,7 @@
           videoLength: "<span class=\"number\">5至10</span>秒",
           movingMoment: "会动的瞬间",
           chooseVideo: "选择一个视频",
-          videoCopy: "从手机相册选择视频。如果视频较长，请选出最想让我们留下的<span class=\"number\">5至10</span>秒。",
+          videoCopy: "从手机相册选择视频。如果视频较长，请先在相册中剪辑为<span class=\"number\">5至10</span>秒，再返回这里。",
           chooseExistingVideo: "从相册选择视频",
           videoLimit: "完成的视频文件将限制在 <span class=\"number\">25</span> <span class=\"latin\">MB</span> 以内。",
           receptionChance: "你的视频有机会在稍后的婚宴上播放。",
@@ -852,25 +802,27 @@
           whatYouSaw: "这就是你看到的婚礼。",
           momentReady: "你选择的瞬间已经准备好了。",
           previewPlaceholder: "你的照片或视频预览会显示在这里",
-          chooseStart: "选择视频开始的位置",
-          sec: "秒",
-          secondsUnit: "秒",
           captionLabel: "想说几句话吗？",
           captionPlaceholder: "选填文字",
           captionSaved: "文字会与下载文件一起保存",
           sendMoment: "发送这个瞬间",
-          mockOnly: "目前是互动模型，内容不会上传。",
+          uploading: "正在上传你的瞬间…",
+          uploadFailed: "暂时无法保存这个瞬间，请再试一次。",
+          uploadTooLarge: "请选择小于<span class=\"number\">25</span> <span class=\"latin\">MB</span>的文件。",
+          trimNotReady: "请先在相册中将视频剪辑为<span class=\"number\">5至10</span>秒，再重新选择。",
+          verifyFirst: "发送前请先完成安全验证。",
+          backendNotReady: "上传功能尚未开放，请稍后再试。",
+          alreadySubmitted: "这台设备已经分享过一张照片或一个视频。",
+          deviceStorageRequired: "请允许 <span class=\"latin\">Safari</span> 使用网站储存空间，以便执行一次上传限制。",
+          storageFull: "我们已经收到所有可保存的瞬间，谢谢你愿意分享。",
           momentReceived: "已收到你的瞬间",
           thankYou: "谢谢你与我们分享眼中的这一天。",
-          successCopy: "正式网站完成后，<span class=\"latin\">Wesley</span> 和 <span class=\"latin\">Dionne</span> 可以下载你的照片或视频。入选的视频也可能在婚宴上播放。",
-          returnMock: "返回模型",
-          mockBanner: "互动设计模型 · 尚未连接储存空间",
+          successCopy: "你的照片或视频已经为 <span class=\"latin\">Wesley</span> 和 <span class=\"latin\">Dionne</span> 保存。入选的视频也可能在婚宴上播放。",
+          oneUploadComplete: "每台设备只能分享一张照片或一个视频。",
           photoPreviewKind: "照片预览",
           photoPreviewCopy: "你的照片将保留为可下载的图片。",
           videoPreviewKind: "视频预览",
-          videoTrimCopy: "请选择你想让我们保留的<span class=\"number\">5至10</span>秒片段。",
           videoReadyCopy: "你的视频已符合<span class=\"number\">5至10</span>秒的长度限制。",
-          videoTooLarge: "为了让 <span class=\"latin\">Safari</span> 稳定处理，请选择小于 <span class=\"number\">150</span> <span class=\"latin\">MB</span> 的视频。",
           videoTooShort: "这个视频少于<span class=\"number\">5</span>秒，请选择较长的视频。",
           videoUnreadable: "<span class=\"latin\">Safari</span> 无法读取这个文件，请选择另一个视频。"
         }
@@ -878,11 +830,25 @@
 
       const panels = ["choice-panel", "photo-panel", "video-panel", "preview-panel", "success-panel"];
       const byId = (id) => document.getElementById(id);
+      const DEVICE_ID_KEY = "wedding-moment-device-id";
+      const SUBMITTED_KEY = "wedding-moment-submitted";
+      const TEST_TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
+      const configuredEndpoint = document.querySelector('meta[name="wedding-upload-endpoint"]').content.trim();
+      const configuredSiteKey = document.querySelector('meta[name="turnstile-site-key"]').content.trim();
+      const isLocalPreview = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      const uploadEndpoint = isLocalPreview ? "http://localhost:8787/api/moments" : configuredEndpoint;
+      const turnstileSiteKey = isLocalPreview ? TEST_TURNSTILE_SITE_KEY : configuredSiteKey;
+
       let currentLanguage = "en";
-      let trimDuration = 5;
       let selectedMediaType = null;
+      let selectedFile = null;
       let selectedUrl = null;
       let sourceDuration = 0;
+      let isUploading = false;
+      let submissionIsLocked = false;
+      let successIsExisting = false;
+      let turnstileWidgetId = null;
+      let turnstileToken = "";
 
       const t = (key) => translations[currentLanguage][key] || translations.en[key] || key;
 
@@ -890,6 +856,30 @@
         element.dataset.i18n = key;
         element.innerHTML = t(key);
       }
+
+      function createDeviceId() {
+        if (crypto.randomUUID) return crypto.randomUUID();
+        const bytes = crypto.getRandomValues(new Uint8Array(16));
+        bytes[6] = (bytes[6] & 15) | 64;
+        bytes[8] = (bytes[8] & 63) | 128;
+        const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+        return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+      }
+
+      function getDeviceId() {
+        try {
+          let value = localStorage.getItem(DEVICE_ID_KEY);
+          if (!value) {
+            value = createDeviceId();
+            localStorage.setItem(DEVICE_ID_KEY, value);
+          }
+          return value;
+        } catch {
+          return "";
+        }
+      }
+
+      const deviceId = getDeviceId();
 
       function applyLanguage(language) {
         currentLanguage = language;
@@ -905,7 +895,7 @@
         });
         byId("language-toggle").setAttribute("aria-label", language === "zh" ? "切换语言" : "Switch language");
         updatePreviewLanguage();
-        if (sourceDuration > 10) updateTrimReadout();
+        updateSuccessLanguage();
       }
 
       function updatePreviewLanguage() {
@@ -915,13 +905,31 @@
           setTranslation(byId("preview-copy"), "photoPreviewCopy");
         } else {
           setTranslation(byId("preview-kind"), "videoPreviewKind");
-          setTranslation(byId("preview-copy"), sourceDuration > 10 ? "videoTrimCopy" : "videoReadyCopy");
+          setTranslation(byId("preview-copy"), "videoReadyCopy");
         }
+      }
+
+      function updateSuccessLanguage() {
+        if (!submissionIsLocked) return;
+        setTranslation(byId("success-step"), successIsExisting ? "alreadySubmitted" : "momentReceived");
+        setTranslation(byId("success-title"), "thankYou");
+        setTranslation(byId("success-copy"), successIsExisting ? "oneUploadComplete" : "successCopy");
       }
 
       function showPanel(id) {
         panels.forEach((panelId) => { byId(panelId).hidden = panelId !== id; });
-        window.scrollTo({ top: Math.max(0, document.querySelector(".card").offsetTop - 18), behavior: "smooth" });
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({
+          top: Math.max(0, document.querySelector(".card").offsetTop - 18),
+          behavior: reducedMotion ? "auto" : "smooth"
+        });
+      }
+
+      function showSuccess(existing = false) {
+        submissionIsLocked = true;
+        successIsExisting = existing;
+        updateSuccessLanguage();
+        showPanel("success-panel");
       }
 
       function releaseUrl() {
@@ -930,12 +938,53 @@
       }
 
       function goHome() {
+        if (submissionIsLocked) {
+          showSuccess(successIsExisting);
+          return;
+        }
+        releaseUrl();
+        selectedFile = null;
+        selectedMediaType = null;
+        sourceDuration = 0;
+        byId("photo-input").value = "";
+        byId("video-input").value = "";
+        byId("submit-status").hidden = true;
         const placeholder = document.createElement("span");
         placeholder.className = "empty-preview";
         setTranslation(placeholder, "previewPlaceholder");
         byId("media-stage").replaceChildren(placeholder);
-        byId("trim-box").hidden = true;
         showPanel("choice-panel");
+      }
+
+      function showSubmitStatus(key) {
+        const status = byId("submit-status");
+        setTranslation(status, key);
+        status.hidden = false;
+      }
+
+      function renderTurnstile() {
+        if (!window.turnstile || !turnstileSiteKey || turnstileWidgetId !== null) return;
+        turnstileWidgetId = window.turnstile.render("#turnstile-container", {
+          sitekey: turnstileSiteKey,
+          theme: "light",
+          callback(token) { turnstileToken = token; },
+          "expired-callback"() { turnstileToken = ""; },
+          "error-callback"() { turnstileToken = ""; }
+        });
+      }
+
+      function loadTurnstile() {
+        if (!turnstileSiteKey || document.querySelector('script[data-turnstile-script]')) {
+          renderTurnstile();
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.dataset.turnstileScript = "";
+        script.addEventListener("load", renderTurnstile, { once: true });
+        document.head.appendChild(script);
       }
 
       byId("language-toggle").addEventListener("click", () => applyLanguage(currentLanguage === "en" ? "zh" : "en"));
@@ -953,98 +1002,158 @@
         if (type === "photo") {
           media = new Image();
           media.alt = currentLanguage === "zh" ? "已选择的照片预览" : "Selected photograph preview";
-          byId("trim-box").hidden = true;
         } else {
           media = document.createElement("video");
           media.controls = true;
           media.playsInline = true;
-          byId("trim-box").hidden = duration <= 10;
-          if (duration > 10) configureTrim(duration);
         }
-        updatePreviewLanguage();
         media.src = url;
         stage.appendChild(media);
+        updatePreviewLanguage();
         showPanel("preview-panel");
+        loadTurnstile();
       }
 
       byId("photo-input").addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (!file) return;
+        if (file.size > 25 * 1024 * 1024) {
+          selectedFile = null;
+          showPanel("preview-panel");
+          showSubmitStatus("uploadTooLarge");
+          return;
+        }
         releaseUrl();
+        selectedFile = file;
         renderPreview("photo", URL.createObjectURL(file));
       });
 
       byId("video-input").addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (!file) return;
-        if (file.size > 150 * 1024 * 1024) {
-          setTranslation(byId("video-status"), "videoTooLarge");
+        if (file.size > 25 * 1024 * 1024) {
+          selectedFile = null;
+          setTranslation(byId("video-status"), "uploadTooLarge");
           return;
         }
         releaseUrl();
+        selectedFile = file;
         const url = URL.createObjectURL(file);
         const probe = document.createElement("video");
         probe.preload = "metadata";
         probe.onloadedmetadata = () => {
           const duration = Number.isFinite(probe.duration) ? probe.duration : 0;
           if (duration < 5) {
+            selectedFile = null;
             URL.revokeObjectURL(url);
             setTranslation(byId("video-status"), "videoTooShort");
+            return;
+          }
+          if (duration > 10) {
+            selectedFile = null;
+            URL.revokeObjectURL(url);
+            setTranslation(byId("video-status"), "trimNotReady");
             return;
           }
           renderPreview("video", url, duration);
         };
         probe.onerror = () => {
+          selectedFile = null;
           URL.revokeObjectURL(url);
           setTranslation(byId("video-status"), "videoUnreadable");
         };
         probe.src = url;
       });
 
-      function configureTrim(duration) {
-        trimDuration = Math.min(5, duration);
-        const slider = byId("trim-start");
-        slider.max = Math.max(0, duration - trimDuration).toFixed(1);
-        slider.value = "0";
-        updateTrimReadout();
-        document.querySelectorAll("[data-trim-duration]").forEach((button) => {
-          const value = Number(button.dataset.trimDuration);
-          button.disabled = value > duration;
-          button.classList.toggle("active", value === trimDuration);
-        });
-      }
-
-      function updateTrimReadout() {
-        const start = Number(byId("trim-start").value);
-        const unit = t("secondsUnit");
-        byId("trim-readout").innerHTML = `<span class="number">${start.toFixed(1)}</span>${unit} → <span class="number">${(start + trimDuration).toFixed(1)}</span>${unit}`;
-        const video = byId("media-stage").querySelector("video");
-        if (video) video.currentTime = start;
-      }
-
-      byId("trim-start").addEventListener("input", updateTrimReadout);
-      document.querySelectorAll("[data-trim-duration]").forEach((button) => {
-        button.addEventListener("click", () => {
-          trimDuration = Number(button.dataset.trimDuration);
-          document.querySelectorAll("[data-trim-duration]").forEach((item) => item.classList.toggle("active", item === button));
-          byId("trim-start").max = Math.max(0, sourceDuration - trimDuration).toFixed(1);
-          if (Number(byId("trim-start").value) > Number(byId("trim-start").max)) byId("trim-start").value = byId("trim-start").max;
-          updateTrimReadout();
-        });
+      byId("caption").addEventListener("input", () => {
+        byId("caption-count").textContent = `${byId("caption").value.length} / 50`;
       });
 
-      byId("caption").addEventListener("input", () => { byId("caption-count").textContent = `${byId("caption").value.length} / 50`; });
-      byId("submit-button").addEventListener("click", () => showPanel("success-panel"));
-      byId("reset-button").addEventListener("click", () => {
-        releaseUrl();
-        selectedMediaType = null;
-        sourceDuration = 0;
-        byId("caption").value = "";
-        byId("caption-count").textContent = "0 / 50";
-        goHome();
+      byId("submit-button").addEventListener("click", async () => {
+        if (isUploading || !selectedFile || !selectedMediaType || submissionIsLocked) return;
+        if (!deviceId) {
+          showSubmitStatus("deviceStorageRequired");
+          return;
+        }
+        if (!uploadEndpoint || !turnstileSiteKey) {
+          showSubmitStatus("backendNotReady");
+          return;
+        }
+        if (!turnstileToken) {
+          showSubmitStatus("verifyFirst");
+          return;
+        }
+
+        const submitButton = byId("submit-button");
+        const form = new FormData();
+        form.set("media", selectedFile, selectedFile.name);
+        form.set("kind", selectedMediaType);
+        form.set("caption", byId("caption").value);
+        form.set("language", currentLanguage);
+        form.set("duration", selectedMediaType === "video" ? String(sourceDuration) : "");
+        form.set("deviceId", deviceId);
+        form.set("cf-turnstile-response", turnstileToken);
+
+        isUploading = true;
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        submitButton.innerHTML = t("uploading");
+        byId("submit-status").hidden = true;
+
+        try {
+          const response = await fetch(uploadEndpoint, { method: "POST", body: form });
+          const result = await response.json().catch(() => ({}));
+          if (response.status === 409 && result.code === "already_submitted") {
+            localStorage.setItem(SUBMITTED_KEY, "1");
+            showSuccess(true);
+            return;
+          }
+          if (!response.ok) {
+            if (result.code === "verification_failed") showSubmitStatus("verifyFirst");
+            else if (result.code === "storage_full") showSubmitStatus("storageFull");
+            else if (result.code === "too_large") showSubmitStatus("uploadTooLarge");
+            else showSubmitStatus("uploadFailed");
+            if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+            turnstileToken = "";
+            return;
+          }
+          localStorage.setItem(SUBMITTED_KEY, "1");
+          showSuccess(false);
+        } catch {
+          showSubmitStatus("uploadFailed");
+        } finally {
+          isUploading = false;
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+          submitButton.innerHTML = t("sendMoment");
+        }
       });
+
+      async function checkExistingSubmission() {
+        try {
+          if (localStorage.getItem(SUBMITTED_KEY) === "1") {
+            showSuccess(true);
+            return;
+          }
+        } catch {
+          return;
+        }
+        if (!uploadEndpoint || !deviceId) return;
+        try {
+          const response = await fetch(`${uploadEndpoint}?deviceId=${encodeURIComponent(deviceId)}`);
+          if (!response.ok) return;
+          const result = await response.json();
+          if (result.hasSubmitted) {
+            localStorage.setItem(SUBMITTED_KEY, "1");
+            showSuccess(true);
+          }
+        } catch {
+          // The page remains usable if the status check is temporarily unavailable.
+        }
+      }
 
       applyLanguage("en");
+      checkExistingSubmission();
     </script>
   </body>
 </html>

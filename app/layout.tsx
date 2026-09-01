@@ -13,7 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Untitled site',
+  title: 'Our Wedding, Through Your Eyes | Wesley & Dionne',
+  description:
+    'Share one photograph or a five-to-ten-second video from Wesley and Dionne’s wedding.',
 };
 
 export default function RootLayout({
