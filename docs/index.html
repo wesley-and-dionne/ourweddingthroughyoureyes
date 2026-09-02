@@ -351,7 +351,7 @@
         display: block;
         margin-top: 4px;
         color: var(--muted);
-        font-size: .75rem;
+        font-size: .9rem;
         line-height: 1.45;
       }
 
@@ -362,7 +362,7 @@
         gap: 8px;
         margin: 20px 0 0;
         color: var(--muted);
-        font-size: .71rem;
+        font-size: .9rem;
         letter-spacing: .04em;
       }
 
@@ -533,12 +533,13 @@
       }
 
       .reception-note {
-        margin: 14px 0 0;
-        padding: 11px 13px;
-        border: 1px solid rgba(201,151,62,.45);
+        max-width: 34rem;
+        margin: 14px auto 0;
+        padding: 0;
+        border: 0;
         color: var(--red-dark);
-        background: rgba(255,255,255,.34);
-        font-size: .78rem;
+        background: transparent;
+        font-size: .95rem;
         line-height: 1.55;
         text-align: center;
       }
@@ -661,7 +662,6 @@
             </div>
             <p class="step-note" data-i18n="oneFrame">One frame</p>
             <h2 data-i18n="choosePhoto">Choose your photograph</h2>
-            <p class="card-copy" data-i18n="photoCopy">We’ll keep it as a downloadable photograph and never turn it into a video.</p>
             <div class="upload-zone" id="photo-zone">
               <div>
                 <p data-i18n="photoFormats">JPEG, PNG, HEIC or WebP · up to <span class="number">25</span> MB</p>
@@ -678,7 +678,7 @@
             </div>
             <p class="step-note" data-i18n="movingMoment">A moving moment</p>
             <h2 data-i18n="chooseVideo">Choose a video</h2>
-            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, trim it to <span class="number">5–10</span> seconds in Photos before returning here.</p>
+            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, trim it to <span class="number">5–10</span> seconds before returning here.</p>
             <label class="primary" for="video-input" style="display:grid;place-items:center;" data-i18n="chooseExistingVideo">Choose existing video</label>
             <input id="video-input" type="file" accept="video/*" hidden />
             <p class="status-message" id="video-status" data-i18n="videoLimit">Finished files will be limited to <span class="number">25</span> MB.</p>
@@ -736,13 +736,12 @@
           photograph: "Photograph",
           oneFrame: "One frame",
           choosePhoto: "Choose your photograph",
-          photoCopy: "We’ll keep it as a downloadable photograph and never turn it into a video.",
           photoFormats: "JPEG, PNG, HEIC or WebP · up to <span class=\"number\">25</span> MB",
           chooseFromPhotos: "Choose from Photos",
           videoLength: "<span class=\"number\">5–10</span> seconds",
           movingMoment: "A moving moment",
           chooseVideo: "Choose a video",
-          videoCopy: "Choose one from your camera roll. If it is longer, trim it to <span class=\"number\">5–10</span> seconds in Photos before returning here.",
+          videoCopy: "Choose one from your camera roll. If it is longer, trim it to <span class=\"number\">5–10</span> seconds before returning here.",
           chooseExistingVideo: "Choose existing video",
           videoLimit: "Finished files will be limited to <span class=\"number\">25</span> MB.",
           chooseAgain: "← Choose again",
@@ -758,7 +757,7 @@
           uploading: "Uploading your moment…",
           uploadFailed: "We couldn’t save that moment. Please try again.",
           uploadTooLarge: "Please choose a file smaller than <span class=\"number\">25</span> MB.",
-          trimNotReady: "Please trim this video to <span class=\"number\">5–10</span> seconds in Photos, then choose it again.",
+          trimNotReady: "Please trim this video to <span class=\"number\">5–10</span> seconds, then choose it again.",
           verifyFirst: "Please complete the security check before sending.",
           backendNotReady: "Uploads are not open yet. Please try again later.",
           alreadySubmitted: "A photo or video has already been shared from this device.",
@@ -792,13 +791,12 @@
           photograph: "照片",
           oneFrame: "一帧记忆",
           choosePhoto: "选择你的照片",
-          photoCopy: "照片将保留为可下载的图片，不会转换成视频。",
           photoFormats: "<span class=\"latin\">JPEG</span>、<span class=\"latin\">PNG</span>、<span class=\"latin\">HEIC</span> 或 <span class=\"latin\">WebP</span> · 最大 <span class=\"number\">25</span> <span class=\"latin\">MB</span>",
           chooseFromPhotos: "从相册选择",
           videoLength: "<span class=\"number\">5至10</span>秒",
           movingMoment: "会动的瞬间",
           chooseVideo: "选择一个视频",
-          videoCopy: "从手机相册选择视频。如果视频较长，请先在相册中剪辑为<span class=\"number\">5至10</span>秒，再返回这里。",
+          videoCopy: "从手机相册选择视频。如果视频较长，请先剪辑为<span class=\"number\">5至10</span>秒，再返回这里。",
           chooseExistingVideo: "从相册选择视频",
           videoLimit: "完成的视频文件将限制在 <span class=\"number\">25</span> <span class=\"latin\">MB</span> 以内。",
           chooseAgain: "← 重新选择",
@@ -814,7 +812,7 @@
           uploading: "正在上传你的瞬间…",
           uploadFailed: "暂时无法保存这个瞬间，请再试一次。",
           uploadTooLarge: "请选择小于<span class=\"number\">25</span> <span class=\"latin\">MB</span>的文件。",
-          trimNotReady: "请先在相册中将视频剪辑为<span class=\"number\">5至10</span>秒，再重新选择。",
+          trimNotReady: "请先将视频剪辑为<span class=\"number\">5至10</span>秒，再重新选择。",
           verifyFirst: "发送前请先完成安全验证。",
           backendNotReady: "上传功能尚未开放，请稍后再试。",
           alreadySubmitted: "这台设备已经分享过一张照片或一个视频。",
