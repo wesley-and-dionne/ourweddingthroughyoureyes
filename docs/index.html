@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#fff2e7" />
     <meta
       name="description"
-      content="Our Wedding, Through Your Eyes. Share one photograph or a 5 to 10 second video for Wesley and Dionne."
+      content="Our Wedding, Through Your Eyes. Share one photograph or one short video for Wesley and Dionne."
     />
     <meta
       name="wedding-upload-endpoint"
@@ -308,6 +308,24 @@
         background: rgba(255, 250, 245, .75);
         cursor: pointer;
         transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      }
+
+      .choice-preferred {
+        border-color: var(--gold-soft);
+        background: rgba(255, 247, 237, .96);
+        box-shadow: inset 0 0 0 1px rgba(201, 151, 62, .12);
+      }
+
+      .choice-note {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 3px 9px;
+        color: var(--red);
+        background: rgba(201, 151, 62, .10);
+        font-family: var(--clarity);
+        font-size: .68rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
       }
 
       .choice:hover,
@@ -622,7 +640,7 @@
           <p class="chinese-title">我们的婚礼 · 你眼中的瞬间</p>
           <img class="knot-divider" src="assets/hero-name-divider-optimized.webp" width="560" height="187" alt="" />
           <p class="intro" data-i18n="intro">
-            Keep one little piece of the day for us: a photograph or five to ten seconds of something you noticed, loved, or want us to remember.
+            Keep one little piece of the day for us: a photograph or one short video of something you noticed, loved, or want us to remember.
           </p>
           <p class="date" data-i18n="keptForever">ONE MOMENT · KEPT FOREVER</p>
         </section>
@@ -632,11 +650,10 @@
             <p class="step-note" data-i18n="shareOne">Share one moment</p>
             <h2 data-i18n="choiceTitle">What did the wedding look like from where you were?</h2>
             <p class="card-copy" data-i18n="choiceCopy">No posing required. The sweet, funny and ordinary moments are the ones we want to keep.</p>
-            <p class="quiet-line" data-i18n="oneSubmissionRule">Each device may share one photo or one video, once only.</p>
-            <p class="reception-note" data-i18n="receptionSelection">A selection of shared photos and videos may be included in a special presentation during the reception.</p>
 
             <div class="choice-grid">
-              <button class="choice" id="photo-choice" type="button">
+              <button class="choice choice-preferred" id="photo-choice" type="button">
+                <span class="choice-note" data-i18n="easiestChoice">Quickest choice</span>
                 <span class="choice-icon-circle" aria-hidden="true">
                   <img class="choice-icon" src="assets/photo-icon-optimized.png" width="96" height="94" alt="" />
                 </span>
@@ -648,10 +665,12 @@
                   <img class="choice-icon" src="assets/video-icon-optimized.png" width="96" height="92" alt="" />
                 </span>
                 <strong data-i18n="shareVideo">Share a video</strong>
-                <small data-i18n="shareVideoHelp">Choose one existing video that is <span class="number">5–10</span> seconds long</small>
+                <small data-i18n="shareVideoHelp">Choose one short video from your phone</small>
               </button>
             </div>
 
+            <p class="quiet-line" data-i18n="oneSubmissionRule">Each device may share one photo or one video, once only.</p>
+            <p class="reception-note" data-i18n="receptionSelection">A selection of shared photos and videos may be included in a special presentation during the reception.</p>
             <p class="quiet-line" data-i18n="publicAccess">No name, login or private invitation link required</p>
           </div>
 
@@ -664,7 +683,7 @@
             <h2 data-i18n="choosePhoto">Choose your photograph</h2>
             <div class="upload-zone" id="photo-zone">
               <div>
-                <p data-i18n="photoFormats">JPEG, PNG, HEIC or WebP · up to <span class="number">25</span> MB</p>
+                <p data-i18n="photoFormats">Your photo will appear here for you to check before sending.</p>
                 <label class="file-trigger" for="photo-input" data-i18n="chooseFromPhotos">Choose from Photos</label>
                 <input id="photo-input" type="file" accept="image/*" hidden />
               </div>
@@ -674,14 +693,14 @@
           <div id="video-panel" hidden>
             <div class="panel-head">
               <button class="back-button" type="button" data-back data-i18n="back">← Back</button>
-              <span class="panel-label" data-i18n="videoLength"><span class="number">5–10</span> seconds</span>
+              <span class="panel-label" data-i18n="videoLength">Up to <span class="number">30</span> seconds</span>
             </div>
             <p class="step-note" data-i18n="movingMoment">A moving moment</p>
             <h2 data-i18n="chooseVideo">Choose a video</h2>
-            <p class="card-copy" data-i18n="videoCopy">Choose one from your camera roll. If it is longer, trim it to <span class="number">5–10</span> seconds before returning here.</p>
+            <p class="card-copy" data-i18n="videoCopy">Choose one short video from your phone. You do not need to edit it here.</p>
             <label class="primary" for="video-input" style="display:grid;place-items:center;" data-i18n="chooseExistingVideo">Choose existing video</label>
             <input id="video-input" type="file" accept="video/*" hidden />
-            <p class="status-message" id="video-status" data-i18n="videoLimit">Finished files will be limited to <span class="number">25</span> MB.</p>
+            <p class="status-message" id="video-status" data-i18n="videoLimit">Videos can be up to <span class="number">30</span> seconds.</p>
           </div>
 
           <div id="preview-panel" hidden>
@@ -695,9 +714,9 @@
             <div class="media-stage" id="media-stage">
               <span class="empty-preview" data-i18n="previewPlaceholder">Your media preview will appear here</span>
             </div>
-            <label class="caption-label" for="caption" data-i18n="captionLabel">A few words, if you like</label>
-            <textarea id="caption" maxlength="50" placeholder="Optional caption" data-i18n-placeholder="captionPlaceholder"></textarea>
-            <div class="caption-meta"><span data-i18n="captionSaved">Saved alongside your download</span><span class="number" id="caption-count">0 / 50</span></div>
+            <label class="caption-label" for="caption" data-i18n="captionLabel">Add a short message, if you like</label>
+            <textarea id="caption" maxlength="50" placeholder="Optional" data-i18n-placeholder="captionPlaceholder"></textarea>
+            <div class="caption-meta"><span data-i18n="captionSaved">You can leave this blank</span><span class="number" id="caption-count">0 / 50</span></div>
             <div class="turnstile-wrap" id="turnstile-container" aria-label="Security check"></div>
             <button class="primary" id="submit-button" type="button" data-i18n="sendMoment">Send this moment</button>
             <p class="status-message" id="submit-status" role="status" aria-live="polite" hidden></p>
@@ -720,44 +739,45 @@
     <script>
       const translations = {
         en: {
-          intro: "Keep one little piece of the day for us: a photograph or five to ten seconds of something you noticed, loved, or want us to remember.",
+          intro: "Keep one little piece of the day for us: a photograph or one short video of something you noticed, loved, or want us to remember.",
           keptForever: "ONE MOMENT · KEPT FOREVER",
           shareOne: "Share one moment",
           choiceTitle: "What did the wedding look like from where you were?",
           choiceCopy: "No posing required. The sweet, funny and ordinary moments are the ones we want to keep.",
           oneSubmissionRule: "Each device may share one photo or one video, once only.",
           receptionSelection: "A selection of shared photos and videos may be included in a special presentation during the reception.",
+          easiestChoice: "Quickest choice",
           sharePhoto: "Share a photo",
           sharePhotoHelp: "Choose one photograph from your camera roll",
           shareVideo: "Share a video",
-          shareVideoHelp: "Choose one existing video that is <span class=\"number\">5–10</span> seconds long",
+          shareVideoHelp: "Choose one short video from your phone",
           publicAccess: "No name, login or private invitation link required",
           back: "← Back",
           photograph: "Photograph",
           oneFrame: "One frame",
           choosePhoto: "Choose your photograph",
-          photoFormats: "JPEG, PNG, HEIC or WebP · up to <span class=\"number\">25</span> MB",
+          photoFormats: "Your photo will appear here for you to check before sending.",
           chooseFromPhotos: "Choose from Photos",
-          videoLength: "<span class=\"number\">5–10</span> seconds",
+          videoLength: "Up to <span class=\"number\">30</span> seconds",
           movingMoment: "A moving moment",
           chooseVideo: "Choose a video",
-          videoCopy: "Choose one from your camera roll. If it is longer, trim it to <span class=\"number\">5–10</span> seconds before returning here.",
+          videoCopy: "Choose one short video from your phone. You do not need to edit it here.",
           chooseExistingVideo: "Choose existing video",
-          videoLimit: "Finished files will be limited to <span class=\"number\">25</span> MB.",
+          videoLimit: "Videos can be up to <span class=\"number\">30</span> seconds.",
           chooseAgain: "← Choose again",
           preview: "Preview",
           lastLook: "Have one last look",
           whatYouSaw: "This is what you saw.",
           momentReady: "Your chosen moment is ready.",
           previewPlaceholder: "Your media preview will appear here",
-          captionLabel: "A few words, if you like",
-          captionPlaceholder: "Optional caption",
-          captionSaved: "Saved alongside your download",
+          captionLabel: "Add a short message, if you like",
+          captionPlaceholder: "Optional",
+          captionSaved: "You can leave this blank",
           sendMoment: "Send this moment",
           uploading: "Uploading your moment…",
           uploadFailed: "We couldn’t save that moment. Please try again.",
-          uploadTooLarge: "Please choose a file smaller than <span class=\"number\">25</span> MB.",
-          trimNotReady: "Please trim this video to <span class=\"number\">5–10</span> seconds, then choose it again.",
+          uploadTooLarge: "This file is too large to send. Please choose a shorter video or another photo. Maximum <span class=\"number\">25</span> MB.",
+          videoTooLong: "This video is longer than <span class=\"number\">30</span> seconds. Please choose another, shorter video.",
           verifyFirst: "Please complete the security check before sending.",
           backendNotReady: "Uploads are not open yet. Please try again later.",
           alreadySubmitted: "A photo or video has already been shared from this device.",
@@ -770,49 +790,49 @@
           photoPreviewKind: "Photograph preview",
           photoPreviewCopy: "Your photograph will stay a downloadable image.",
           videoPreviewKind: "Video preview",
-          videoReadyCopy: "Your video is already within the five-to-ten-second limit.",
-          videoTooShort: "That video is shorter than <span class=\"number\">5</span> seconds. Please choose a longer moment.",
+          videoReadyCopy: "Your video is ready to send.",
           videoUnreadable: "Safari could not read that file. Please try another video."
         },
         zh: {
-          intro: "请为我们留下一小段婚礼记忆：一张照片，或<span class=\"number\">5至10</span>秒你所看见、喜欢，或希望我们记住的瞬间。",
+          intro: "请为我们留下一小段婚礼记忆：一张照片，或一段不超过<span class=\"number\">30</span>秒的短视频，记录你所看见、喜欢，或希望我们记住的瞬间。",
           keptForever: "一个瞬间 · 永远珍藏",
           shareOne: "分享一个瞬间",
           choiceTitle: "从你的位置看，我们的婚礼是什么样子？",
           choiceCopy: "不需要刻意摆拍。甜蜜、有趣和日常的瞬间，都是我们最想珍藏的回忆。",
           oneSubmissionRule: "每台设备只能提交一次，可选择一张照片或一段视频。",
           receptionSelection: "部分宾客分享的照片和视频可能会被选入婚宴上的特别播放内容。",
+          easiestChoice: "最快完成",
           sharePhoto: "分享照片",
           sharePhotoHelp: "从手机相册中选择一张照片",
           shareVideo: "分享视频",
-          shareVideoHelp: "选择一个长度为<span class=\"number\">5至10</span>秒的已有视频",
+          shareVideoHelp: "从手机相册中选择一段短视频",
           publicAccess: "无需姓名、登录或私人邀请链接",
           back: "← 返回",
           photograph: "照片",
           oneFrame: "一帧记忆",
           choosePhoto: "选择你的照片",
-          photoFormats: "<span class=\"latin\">JPEG</span>、<span class=\"latin\">PNG</span>、<span class=\"latin\">HEIC</span> 或 <span class=\"latin\">WebP</span> · 最大 <span class=\"number\">25</span> <span class=\"latin\">MB</span>",
+          photoFormats: "照片会先显示在这里，让你确认后再发送。",
           chooseFromPhotos: "从相册选择",
-          videoLength: "<span class=\"number\">5至10</span>秒",
+          videoLength: "最长<span class=\"number\">30</span>秒",
           movingMoment: "会动的瞬间",
           chooseVideo: "选择一个视频",
-          videoCopy: "从手机相册选择视频。如果视频较长，请先剪辑为<span class=\"number\">5至10</span>秒，再返回这里。",
+          videoCopy: "从手机相册中选择一段短视频，无需在这里剪辑。",
           chooseExistingVideo: "从相册选择视频",
-          videoLimit: "完成的视频文件将限制在 <span class=\"number\">25</span> <span class=\"latin\">MB</span> 以内。",
+          videoLimit: "视频最长可为<span class=\"number\">30</span>秒。",
           chooseAgain: "← 重新选择",
           preview: "预览",
           lastLook: "最后确认",
           whatYouSaw: "这就是你看到的婚礼。",
           momentReady: "你选择的瞬间已经准备好了。",
           previewPlaceholder: "你的照片或视频预览会显示在这里",
-          captionLabel: "想说几句话吗？",
-          captionPlaceholder: "选填文字",
-          captionSaved: "文字会与下载文件一起保存",
+          captionLabel: "想留下一句短讯吗？选填",
+          captionPlaceholder: "选填",
+          captionSaved: "可以留空",
           sendMoment: "发送这个瞬间",
           uploading: "正在上传你的瞬间…",
           uploadFailed: "暂时无法保存这个瞬间，请再试一次。",
-          uploadTooLarge: "请选择小于<span class=\"number\">25</span> <span class=\"latin\">MB</span>的文件。",
-          trimNotReady: "请先将视频剪辑为<span class=\"number\">5至10</span>秒，再重新选择。",
+          uploadTooLarge: "这个文件太大，无法发送。请选择较短的视频或另一张照片。最大 <span class=\"number\">25</span> <span class=\"latin\">MB</span>。",
+          videoTooLong: "这个视频超过<span class=\"number\">30</span>秒，请选择另一段较短的视频。",
           verifyFirst: "发送前请先完成安全验证。",
           backendNotReady: "上传功能尚未开放，请稍后再试。",
           alreadySubmitted: "这台设备已经分享过一张照片或一个视频。",
@@ -825,8 +845,7 @@
           photoPreviewKind: "照片预览",
           photoPreviewCopy: "你的照片将保留为可下载的图片。",
           videoPreviewKind: "视频预览",
-          videoReadyCopy: "你的视频已符合<span class=\"number\">5至10</span>秒的长度限制。",
-          videoTooShort: "这个视频少于<span class=\"number\">5</span>秒，请选择较长的视频。",
+          videoReadyCopy: "你的视频已准备好发送。",
           videoUnreadable: "<span class=\"latin\">Safari</span> 无法读取这个文件，请选择另一个视频。"
         }
       };
@@ -836,6 +855,7 @@
       const DEVICE_ID_KEY = "wedding-moment-device-id";
       const SUBMITTED_KEY = "wedding-moment-submitted";
       const TEST_TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
+      const MAX_VIDEO_SECONDS = 30;
       const configuredEndpoint = document.querySelector('meta[name="wedding-upload-endpoint"]').content.trim();
       const configuredSiteKey = document.querySelector('meta[name="turnstile-site-key"]').content.trim();
       const isLocalPreview = location.hostname === "localhost" || location.hostname === "127.0.0.1";
@@ -994,7 +1014,10 @@
       byId("language-toggle").addEventListener("click", () => applyLanguage(currentLanguage === "en" ? "zh" : "en"));
       document.querySelectorAll("[data-back]").forEach((button) => button.addEventListener("click", goHome));
       byId("photo-choice").addEventListener("click", () => showPanel("photo-panel"));
-      byId("video-choice").addEventListener("click", () => showPanel("video-panel"));
+      byId("video-choice").addEventListener("click", () => {
+        setTranslation(byId("video-status"), "videoLimit");
+        showPanel("video-panel");
+      });
 
       function renderPreview(type, url, duration = 0) {
         selectedMediaType = type;
@@ -1047,16 +1070,16 @@
         probe.preload = "metadata";
         probe.onloadedmetadata = () => {
           const duration = Number.isFinite(probe.duration) ? probe.duration : 0;
-          if (duration < 5) {
+          if (duration <= 0) {
             selectedFile = null;
             URL.revokeObjectURL(url);
-            setTranslation(byId("video-status"), "videoTooShort");
+            setTranslation(byId("video-status"), "videoUnreadable");
             return;
           }
-          if (duration > 10) {
+          if (duration > MAX_VIDEO_SECONDS) {
             selectedFile = null;
             URL.revokeObjectURL(url);
-            setTranslation(byId("video-status"), "trimNotReady");
+            setTranslation(byId("video-status"), "videoTooLong");
             return;
           }
           renderPreview("video", url, duration);
@@ -1116,6 +1139,7 @@
             if (result.code === "verification_failed") showSubmitStatus("verifyFirst");
             else if (result.code === "storage_full") showSubmitStatus("storageFull");
             else if (result.code === "too_large") showSubmitStatus("uploadTooLarge");
+            else if (result.code === "invalid_duration") showSubmitStatus("videoTooLong");
             else showSubmitStatus("uploadFailed");
             if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
             turnstileToken = "";

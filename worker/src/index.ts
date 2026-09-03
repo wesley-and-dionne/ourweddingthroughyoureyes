@@ -2,6 +2,7 @@ import { handleAdminRequest } from './admin';
 
 const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 const MAX_CAPTION_LENGTH = 50;
+const MAX_VIDEO_SECONDS = 30;
 const TURNSTILE_VERIFY_URL =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
@@ -168,7 +169,7 @@ async function handleUpload(request: Request, env: Env) {
   const duration = Number(form.get('duration') || 0);
   if (
     mediaKind === 'video' &&
-    (!Number.isFinite(duration) || duration < 5 || duration > 10)
+    (!Number.isFinite(duration) || duration <= 0 || duration > MAX_VIDEO_SECONDS)
   ) {
     return json(request, env, { ok: false, code: 'invalid_duration' }, 400);
   }
