@@ -487,6 +487,9 @@
         background: #261b1c;
       }
 
+      .media-stage[data-orientation="landscape"] { width: min(100%, 560px); }
+      .media-stage[data-orientation="square"] { width: min(100%, 440px); }
+
       .preview-couple {
         position: relative;
         z-index: 0;
@@ -503,7 +506,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
 
       .media-stage .empty-preview {
@@ -990,7 +993,10 @@
         const placeholder = document.createElement("span");
         placeholder.className = "empty-preview";
         setTranslation(placeholder, "previewPlaceholder");
-        byId("media-stage").replaceChildren(placeholder);
+        const stage = byId("media-stage");
+        stage.replaceChildren(placeholder);
+        stage.removeAttribute("data-orientation");
+        stage.style.removeProperty("aspect-ratio");
         showPanel("choice-panel");
       }
 
@@ -1033,20 +1039,32 @@
         showPanel("video-panel");
       });
 
-      function renderPreview(type, url, duration = 0) {
+      function sizePreviewStage(stage, width, height) {
+        if (!width || !height) return;
+        const ratio = width / height;
+        stage.dataset.orientation = ratio > 1.08 ? "landscape" : ratio < .92 ? "portrait" : "square";
+        stage.style.aspectRatio = `${width} / ${height}`;
+      }
+
+      function renderPreview(type, url, duration = 0, width = 0, height = 0) {
         selectedMediaType = type;
         selectedUrl = url;
         sourceDuration = duration;
         const stage = byId("media-stage");
         stage.replaceChildren();
+        stage.removeAttribute("data-orientation");
+        stage.style.removeProperty("aspect-ratio");
+        sizePreviewStage(stage, width, height);
         let media;
         if (type === "photo") {
           media = new Image();
           media.alt = currentLanguage === "zh" ? "已选择的照片预览" : "Selected photograph preview";
+          media.addEventListener("load", () => sizePreviewStage(stage, media.naturalWidth, media.naturalHeight), { once: true });
         } else {
           media = document.createElement("video");
           media.controls = true;
           media.playsInline = true;
+          media.addEventListener("loadedmetadata", () => sizePreviewStage(stage, media.videoWidth, media.videoHeight), { once: true });
         }
         media.src = url;
         stage.appendChild(media);
@@ -1096,7 +1114,7 @@
             setTranslation(byId("video-status"), "videoTooLong");
             return;
           }
-          renderPreview("video", url, duration);
+          renderPreview("video", url, duration, probe.videoWidth, probe.videoHeight);
         };
         probe.onerror = () => {
           selectedFile = null;
