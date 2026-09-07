@@ -478,12 +478,24 @@
 
       .media-stage {
         position: relative;
+        z-index: 1;
         width: min(100%, 360px);
         aspect-ratio: 9 / 16;
         margin: 0 auto 18px;
         overflow: hidden;
         border: 1px solid var(--gold-soft);
         background: #261b1c;
+      }
+
+      .preview-couple {
+        position: relative;
+        z-index: 0;
+        display: block;
+        width: min(92%, 360px);
+        height: auto;
+        margin: 6px auto -18px;
+        pointer-events: none;
+        filter: drop-shadow(0 10px 12px rgba(62, 38, 38, .09));
       }
 
       .media-stage img,
@@ -602,6 +614,7 @@
         .floral-right { width: 62vw; right: -27vw; opacity: .32; }
         .blossoms-right { display: none; }
         .peony-bottom { width: 72vw; left: -31vw; opacity: .2; }
+        .preview-couple { width: min(88%, 310px); margin-bottom: -14px; }
       }
 
       @media (max-width: 360px) {
@@ -711,6 +724,7 @@
             <p class="step-note" data-i18n="lastLook">Have one last look</p>
             <h2 data-i18n="whatYouSaw">This is what you saw.</h2>
             <p class="card-copy" id="preview-copy" data-i18n="momentReady">Your chosen moment is ready.</p>
+            <img class="preview-couple" src="assets/wedding-couple-preview-optimized.webp" width="720" height="463" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div class="media-stage" id="media-stage">
               <span class="empty-preview" data-i18n="previewPlaceholder">Your media preview will appear here</span>
             </div>
@@ -1181,7 +1195,9 @@
       }
 
       applyLanguage("en");
-      checkExistingSubmission();
+      const showDesignPreview = isLocalPreview && new URLSearchParams(location.search).get("preview") === "characters";
+      if (showDesignPreview) showPanel("preview-panel");
+      else checkExistingSubmission();
     </script>
   </body>
 </html>
