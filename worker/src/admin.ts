@@ -120,6 +120,7 @@ function adminHtml() {
       .media-preview img,.media-preview video { display:block; width:100%; height:100%; object-fit:contain; }
       .media-preview img { background:var(--light); }
       .video-compatibility { margin:8px 0 0; color:var(--muted); font-size:.78rem; line-height:1.4; }
+      .video-open { display:flex; align-items:center; justify-content:center; width:100%; margin-top:8px; border:1px solid var(--gold); padding:8px 12px; color:var(--red); background:var(--light); font-weight:600; text-decoration:none; text-align:center; }
       .details { min-width:0; }
       .kind { margin:0 0 4px; color:var(--red); font-family:var(--clarity); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; }
       h2 { margin:0; font-family:var(--display); font-size:clamp(1.25rem,4vw,1.65rem); font-weight:400; }
@@ -160,13 +161,13 @@ function adminHtml() {
       </nav>
     </main>
     <script>
-      const translations={en:{title:"Private wedding media",intro:"Preview each moment here, then download each photograph or video individually. No ZIP file will be created.",moments:"Moments",photos:"Photographs",videos:"Videos",loading:"Loading your wedding media…",empty:"No photographs or videos have been received yet.",error:"The media list could not be loaded. Please refresh the page.",photo:"Photograph",video:"Video",photoPreview:"Photograph preview",videoPreview:"Video preview",videoCompatibility:"If this MOV video stays at 0:00, open this admin page in Safari or download the video.",download:"Download",previous:"Previous",next:"Next",page:"Page",of:"of",seconds:"seconds"},zh:{title:"私人婚礼媒体",intro:"你可以在这里预览每个瞬间，并逐一下载照片或视频，不会建立 ZIP 文件。",moments:"瞬间",photos:"照片",videos:"视频",loading:"正在载入婚礼媒体…",empty:"目前还没有收到照片或视频。",error:"无法载入媒体列表，请刷新页面。",photo:"照片",video:"视频",photoPreview:"照片预览",videoPreview:"视频预览",videoCompatibility:"如果 MOV 视频停留在 0:00，请使用 Safari 打开此管理页面，或下载视频观看。",download:"下载",previous:"上一页",next:"下一页",page:"第",of:"页，共",seconds:"秒"}};
+      const translations={en:{title:"Private wedding media",intro:"Preview each moment here, then download each photograph or video individually. No ZIP file will be created.",moments:"Moments",photos:"Photographs",videos:"Videos",loading:"Loading your wedding media…",empty:"No photographs or videos have been received yet.",error:"The media list could not be loaded. Please refresh the page.",photo:"Photograph",video:"Video",photoPreview:"Photograph preview",videoPreview:"Video preview",videoCompatibility:"If the preview does not play, tap Open video or download it.",openVideo:"Open video",download:"Download",previous:"Previous",next:"Next",page:"Page",of:"of",seconds:"seconds"},zh:{title:"私人婚礼媒体",intro:"你可以在这里预览每个瞬间，并逐一下载照片或视频，不会建立 ZIP 文件。",moments:"瞬间",photos:"照片",videos:"视频",loading:"正在载入婚礼媒体…",empty:"目前还没有收到照片或视频。",error:"无法载入媒体列表，请刷新页面。",photo:"照片",video:"视频",photoPreview:"照片预览",videoPreview:"视频预览",videoCompatibility:"如果预览无法播放，请点击“打开视频”或下载视频。",openVideo:"打开视频",download:"下载",previous:"上一页",next:"下一页",page:"第",of:"页，共",seconds:"秒"}};
       let language="en";let page=1;let data=null;
       const t=(key)=>translations[language][key];
       const formatBytes=(bytes)=>{if(bytes<1024)return bytes+" B";if(bytes<1048576)return(bytes/1024).toFixed(1)+" KB";return(bytes/1048576).toFixed(1)+" MB";};
       const formatDate=(value)=>new Intl.DateTimeFormat(language==="zh"?"zh-CN":"en-GB",{dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Kuala_Lumpur"}).format(new Date(value));
       function applyLanguage(next){language=next;document.documentElement.lang=next==="zh"?"zh-Hans":"en";document.querySelectorAll("[data-i18n]").forEach((element)=>{element.textContent=t(element.dataset.i18n);});document.querySelectorAll("[data-language]").forEach((element)=>element.classList.toggle("active",element.dataset.language===next));document.querySelector("#language").setAttribute("aria-label",next==="zh"?"切换语言":"Switch language");render();}
-      function render(){if(!data)return;document.querySelector("#total-count").textContent=data.summary.total;document.querySelector("#photo-count").textContent=data.summary.photos;document.querySelector("#video-count").textContent=data.summary.videos;const list=document.querySelector("#list");list.replaceChildren();if(!data.items.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=t("empty");list.appendChild(empty);}for(const item of data.items){const card=document.createElement("article");card.className="moment";const previewColumn=document.createElement("div");previewColumn.className="preview-column";const previewWrap=document.createElement("div");previewWrap.className="media-preview";const preview=document.createElement(item.kind==="photo"?"img":"video");preview.src="/api/admin/moments/"+encodeURIComponent(item.id)+"/preview";if(item.kind==="photo"){preview.loading="lazy";preview.alt=t("photoPreview")+": "+item.original_name;}else{preview.controls=true;preview.preload="metadata";preview.playsInline=true;preview.setAttribute("aria-label",t("videoPreview")+": "+item.original_name);}previewWrap.appendChild(preview);previewColumn.appendChild(previewWrap);if(item.kind==="video"&&item.content_type==="video/quicktime"){const compatibility=document.createElement("p");compatibility.className="video-compatibility";compatibility.textContent=t("videoCompatibility");previewColumn.appendChild(compatibility);}const details=document.createElement("div");details.className="details";const kind=document.createElement("p");kind.className="kind";kind.textContent=t(item.kind);const title=document.createElement("h2");title.textContent=item.original_name;const meta=document.createElement("p");meta.className="meta";const seconds=Number(item.duration_seconds);const duration=Number.isFinite(seconds)&&seconds>0?" · "+seconds.toFixed(1).replace(/\\.0$/,"")+" "+t("seconds"):"";meta.textContent=formatDate(item.received_at)+" · "+formatBytes(item.size_bytes)+duration;details.append(kind,title,meta);if(item.caption){const caption=document.createElement("p");caption.className="caption";caption.textContent=item.caption;details.appendChild(caption);}const download=document.createElement("a");download.className="download";download.href="/api/admin/moments/"+encodeURIComponent(item.id)+"/download";download.textContent=t("download");download.setAttribute("download","");card.append(previewColumn,details,download);list.appendChild(card);}document.querySelector("#page-number").textContent=language==="zh"?t("page")+data.page+t("of")+data.totalPages+"页":t("page")+" "+data.page+" "+t("of")+" "+data.totalPages;document.querySelector("#previous").disabled=data.page<=1;document.querySelector("#next").disabled=data.page>=data.totalPages;}
+      function render(){if(!data)return;document.querySelector("#total-count").textContent=data.summary.total;document.querySelector("#photo-count").textContent=data.summary.photos;document.querySelector("#video-count").textContent=data.summary.videos;const list=document.querySelector("#list");list.replaceChildren();if(!data.items.length){const empty=document.createElement("div");empty.className="empty";empty.textContent=t("empty");list.appendChild(empty);}for(const item of data.items){const card=document.createElement("article");card.className="moment";const previewColumn=document.createElement("div");previewColumn.className="preview-column";const previewWrap=document.createElement("div");previewWrap.className="media-preview";const previewUrl="/api/admin/moments/"+encodeURIComponent(item.id)+"/preview";const preview=document.createElement(item.kind==="photo"?"img":"video");preview.src=previewUrl;if(item.kind==="photo"){preview.loading="lazy";preview.alt=t("photoPreview")+": "+item.original_name;}else{preview.controls=true;preview.preload="metadata";preview.playsInline=true;preview.setAttribute("aria-label",t("videoPreview")+": "+item.original_name);}previewWrap.appendChild(preview);previewColumn.appendChild(previewWrap);if(item.kind==="video"){const openVideo=document.createElement("a");openVideo.className="video-open";openVideo.href=previewUrl;openVideo.target="_blank";openVideo.rel="noopener";openVideo.textContent=t("openVideo");previewColumn.appendChild(openVideo);const compatibility=document.createElement("p");compatibility.className="video-compatibility";compatibility.textContent=t("videoCompatibility");previewColumn.appendChild(compatibility);}const details=document.createElement("div");details.className="details";const kind=document.createElement("p");kind.className="kind";kind.textContent=t(item.kind);const title=document.createElement("h2");title.textContent=item.original_name;const meta=document.createElement("p");meta.className="meta";const seconds=Number(item.duration_seconds);const duration=Number.isFinite(seconds)&&seconds>0?" · "+seconds.toFixed(1).replace(/\\.0$/,"")+" "+t("seconds"):"";meta.textContent=formatDate(item.received_at)+" · "+formatBytes(item.size_bytes)+duration;details.append(kind,title,meta);if(item.caption){const caption=document.createElement("p");caption.className="caption";caption.textContent=item.caption;details.appendChild(caption);}const download=document.createElement("a");download.className="download";download.href="/api/admin/moments/"+encodeURIComponent(item.id)+"/download";download.textContent=t("download");download.setAttribute("download","");card.append(previewColumn,details,download);list.appendChild(card);}document.querySelector("#page-number").textContent=language==="zh"?t("page")+data.page+t("of")+data.totalPages+"页":t("page")+" "+data.page+" "+t("of")+" "+data.totalPages;document.querySelector("#previous").disabled=data.page<=1;document.querySelector("#next").disabled=data.page>=data.totalPages;}
       async function load(){const list=document.querySelector("#list");try{const response=await fetch("/api/admin/moments?page="+page);if(!response.ok)throw new Error();data=await response.json();render();}catch{list.innerHTML="";const error=document.createElement("div");error.className="error";error.textContent=t("error");list.appendChild(error);}}
       document.querySelector("#language").addEventListener("click",()=>applyLanguage(language==="en"?"zh":"en"));document.querySelector("#previous").addEventListener("click",()=>{if(page>1){page-=1;load();}});document.querySelector("#next").addEventListener("click",()=>{if(data&&page<data.totalPages){page+=1;load();}});applyLanguage("en");load();
     </script>
@@ -252,6 +253,27 @@ async function serveMoment(
     });
   }
 
+  const filename = safeDownloadName(moment.original_name);
+  if (request.method === 'HEAD') {
+    const object = await env.MEDIA.head(moment.object_key);
+    if (!object) {
+      return new Response(null, {
+        status: 404,
+        headers: securityHeaders('text/plain; charset=utf-8'),
+      });
+    }
+    const headers = securityHeaders(moment.content_type);
+    headers.set('Accept-Ranges', 'bytes');
+    headers.set('Content-Length', String(object.size));
+    headers.set(
+      'Content-Disposition',
+      `${disposition}; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
+    );
+    headers.set('ETag', object.httpEtag);
+    headers.set('Last-Modified', object.uploaded.toUTCString());
+    return new Response(null, { status: 200, headers });
+  }
+
   const rangeHeader = disposition === 'inline'
     ? request.headers.get('Range')
     : null;
@@ -268,7 +290,7 @@ async function serveMoment(
     });
   }
 
-  const filename = safeDownloadName(moment.original_name);
+  const totalBytes = object.size;
   const headers = securityHeaders(moment.content_type);
   headers.set('Accept-Ranges', 'bytes');
   headers.set(
@@ -276,17 +298,18 @@ async function serveMoment(
     `${disposition}; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
   );
   headers.set('ETag', object.httpEtag);
+  headers.set('Last-Modified', object.uploaded.toUTCString());
   let status = 200;
   if (object.range) {
-    const range = returnedRange(object.range, moment.size_bytes);
+    const range = returnedRange(object.range, totalBytes);
     headers.set('Content-Length', String(range.length));
     headers.set(
       'Content-Range',
-      `bytes ${range.offset}-${range.offset + range.length - 1}/${moment.size_bytes}`,
+      `bytes ${range.offset}-${range.offset + range.length - 1}/${totalBytes}`,
     );
     status = 206;
   } else {
-    headers.set('Content-Length', String(moment.size_bytes));
+    headers.set('Content-Length', String(totalBytes));
   }
   return new Response(object.body, { status, headers });
 }
@@ -301,10 +324,12 @@ export async function handleAdminRequest(request: Request, env: Env) {
   if (!(await isAuthorized(request, env))) return challenge();
 
   const url = new URL(request.url);
-  if (request.method !== 'GET') {
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    const headers = securityHeaders('text/plain; charset=utf-8');
+    headers.set('Allow', 'GET, HEAD');
     return new Response('Method not allowed.', {
       status: 405,
-      headers: securityHeaders('text/plain; charset=utf-8'),
+      headers,
     });
   }
   if (url.pathname === '/admin' || url.pathname === '/admin/') {
@@ -313,9 +338,14 @@ export async function handleAdminRequest(request: Request, env: Env) {
       'Content-Security-Policy',
       "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self'; media-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
     );
-    return new Response(adminHtml(), { headers });
+    return new Response(request.method === 'HEAD' ? null : adminHtml(), { headers });
   }
   if (url.pathname === '/api/admin/moments') {
+    if (request.method === 'HEAD') {
+      return new Response(null, {
+        headers: securityHeaders('application/json; charset=utf-8'),
+      });
+    }
     return listMoments(request, env);
   }
   const match = url.pathname.match(
